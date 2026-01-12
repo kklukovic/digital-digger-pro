@@ -5,6 +5,7 @@ import SolutionSection from "@/components/SolutionSection";
 import PricingSection from "@/components/PricingSection";
 import AboutSection from "@/components/AboutSection";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import AIReceptionist from "@/components/AIReceptionist";
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
         <AboutSection />
       </main>
       <WhatsAppButton />
+      <AIReceptionist />
     </div>
   );
 };
