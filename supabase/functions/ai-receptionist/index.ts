@@ -34,7 +34,72 @@ serve(async (req) => {
   }
 
   try {
-    const { messages } = await req.json();
+    // Validate Content-Length to prevent extremely large payloads
+    const contentLength = req.headers.get("content-length");
+    if (contentLength && parseInt(contentLength) > 50000) {
+      return new Response(JSON.stringify({ error: "Request too large" }), {
+        status: 413,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const body = await req.json();
+    const { messages } = body;
+
+    // Validate messages is an array and not empty
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return new Response(
+        JSON.stringify({ error: "Invalid messages format" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Limit conversation history to prevent abuse (max 20 messages)
+    if (messages.length > 20) {
+      return new Response(
+        JSON.stringify({ error: "Too many messages in history" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Validate each message structure and content
+    for (const msg of messages) {
+      // Check required fields exist
+      if (!msg || typeof msg !== 'object' || !msg.role || !msg.content) {
+        return new Response(
+          JSON.stringify({ error: "Invalid message format" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      // Only allow valid roles (user/assistant)
+      if (msg.role !== 'user' && msg.role !== 'assistant') {
+        return new Response(
+          JSON.stringify({ error: "Invalid message role" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      // Validate content is a string and within reasonable length (max 2000 chars)
+      if (typeof msg.content !== 'string' || msg.content.length > 2000) {
+        return new Response(
+          JSON.stringify({ error: "Message content invalid or too long" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      // Basic sanitization - trim whitespace
+      msg.content = msg.content.trim();
+
+      // Reject empty messages after trimming
+      if (msg.content.length === 0) {
+        return new Response(
+          JSON.stringify({ error: "Empty message content" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+    }
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
@@ -83,7 +148,7 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error("AI receptionist error:", error);
-    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : "Unknown error" }), {
+    return new Response(JSON.stringify({ error: "An error occurred" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
