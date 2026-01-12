@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Shield, Clock, Zap, Check } from "lucide-react";
@@ -13,6 +14,23 @@ const features = [
 ];
 
 const Checkout = () => {
+  useEffect(() => {
+    // Load ThriveCart script
+    const script = document.createElement("script");
+    script.src = "//tinder.thrivecart.com/embed/v2/thrivecart.js";
+    script.id = "tc-earnmoon-71-MEW6Z5";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // Cleanup script on unmount
+      const existingScript = document.getElementById("tc-earnmoon-71-MEW6Z5");
+      if (existingScript) {
+        existingScript.remove();
+      }
+    };
+  }, []);
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -87,31 +105,14 @@ const Checkout = () => {
             <div className="glass rounded-2xl p-8 border-accent/30">
               <h3 className="font-bold text-xl mb-6 text-center">Complete Your Order</h3>
               
-              {/* ThriveCart embed placeholder */}
+              {/* ThriveCart embed */}
               <div 
-                id="thrivecart-embed"
-                className="min-h-[400px] bg-background/50 rounded-xl border border-dashed border-border flex items-center justify-center"
-              >
-                <div className="text-center p-8">
-                  <p className="text-muted-foreground mb-4">
-                    ThriveCart payment form will appear here.
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    Paste your ThriveCart embed code to replace this placeholder.
-                  </p>
-                  
-                  {/* Instructions for embedding */}
-                  <div className="mt-6 text-left glass-light rounded-lg p-4">
-                    <p className="text-xs text-muted-foreground font-mono">
-                      {`<!-- Replace this div with your ThriveCart embed code -->`}
-                      <br />
-                      {`<!-- Example: -->`}
-                      <br />
-                      {`<div class="thrivecart-embeddable" data-thrivecart-account="your-account" data-thrivecart-tpl="v2" data-thrivecart-product="your-product-id" style="display:block"></div>`}
-                    </p>
-                  </div>
-                </div>
-              </div>
+                className="tc-v2-embeddable-target min-h-[400px]"
+                data-thrivecart-account="earnmoon"
+                data-thrivecart-tpl="v2"
+                data-thrivecart-product="71"
+                data-thrivecart-embeddable="tc-earnmoon-71-MEW6Z5"
+              />
 
               <p className="text-center text-sm text-muted-foreground mt-6">
                 Questions before ordering?{" "}
