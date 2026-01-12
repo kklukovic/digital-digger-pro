@@ -1,13 +1,7 @@
-import { Mail, Phone, MessageCircle } from "lucide-react";
+import { Phone, MessageCircle } from "lucide-react";
 import kresoPhoto from "@/assets/kreso-photo.png";
 
 const AboutSection = () => {
-  const openWhatsApp = () => {
-    const message = encodeURIComponent(
-      "Hi Kreso! I have a question about your website services."
-    );
-    window.open(`https://wa.me/385989821111?text=${message}`, "_blank");
-  };
 
   return (
     <section className="section-padding relative">
@@ -35,29 +29,25 @@ const AboutSection = () => {
                   give you a website that actually brings in customers, not just looks pretty.
                 </p>
 
-                {/* Contact info */}
-                <div className="flex flex-col gap-3">
+                {/* Contact Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4 mt-2">
                   <a
-                    href="mailto:kris@localdigitalops.com"
-                    className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors justify-center md:justify-start"
+                    href="https://wa.me/385989821111"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                    style={{ backgroundColor: '#25D366' }}
                   >
-                    <Mail className="w-5 h-5" />
-                    <span>kris@localdigitalops.com</span>
+                    <MessageCircle className="w-5 h-5" />
+                    <span>Message us on WhatsApp</span>
                   </a>
                   <a
                     href="tel:+385989821111"
-                    className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors justify-center md:justify-start"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold bg-accent text-accent-foreground transition-all duration-300 hover:scale-105 hover:shadow-lg"
                   >
                     <Phone className="w-5 h-5" />
-                    <span>+385 98 982 1111</span>
+                    <span>Call us now</span>
                   </a>
-                  <button
-                    onClick={openWhatsApp}
-                    className="flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors justify-center md:justify-start"
-                  >
-                    <MessageCircle className="w-5 h-5" />
-                    <span>Chat on WhatsApp</span>
-                  </button>
                 </div>
 
                 <p className="text-sm text-muted-foreground mt-4 italic">
