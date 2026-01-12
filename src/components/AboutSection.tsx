@@ -1,15 +1,27 @@
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MessageCircle } from "lucide-react";
+import kresoPhoto from "@/assets/kreso-photo.png";
 
 const AboutSection = () => {
+  const openWhatsApp = () => {
+    const message = encodeURIComponent(
+      "Hi Kreso! I have a question about your website services."
+    );
+    window.open(`https://wa.me/385989821111?text=${message}`, "_blank");
+  };
+
   return (
     <section className="section-padding relative">
       <div className="container-tight">
         <div className="max-w-4xl mx-auto">
           <div className="glass rounded-3xl p-8 md:p-12">
             <div className="flex flex-col md:flex-row gap-10 items-center">
-              {/* Avatar/Photo placeholder */}
-              <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl bg-gradient-accent flex items-center justify-center shrink-0 shadow-accent-glow">
-                <span className="text-5xl md:text-6xl font-bold text-accent-foreground">K</span>
+              {/* Photo */}
+              <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden shrink-0 shadow-accent-glow ring-2 ring-accent/30">
+                <img 
+                  src={kresoPhoto} 
+                  alt="Kreso Klukovic" 
+                  className="w-full h-full object-cover"
+                />
               </div>
 
               {/* Content */}
@@ -24,32 +36,39 @@ const AboutSection = () => {
                 </p>
 
                 {/* Contact info */}
-                <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <div className="flex flex-col gap-3">
                   <a
-                    href="mailto:kreso@localdigitalops.com"
-                    className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors"
+                    href="mailto:kris@localdigitalops.com"
+                    className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors justify-center md:justify-start"
                   >
                     <Mail className="w-5 h-5" />
-                    <span>kreso@localdigitalops.com</span>
+                    <span>kris@localdigitalops.com</span>
                   </a>
                   <a
-                    href="tel:+15551234567"
-                    className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors"
+                    href="tel:+385989821111"
+                    className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors justify-center md:justify-start"
                   >
                     <Phone className="w-5 h-5" />
-                    <span>(555) 123-4567</span>
+                    <span>+385 98 982 1111</span>
                   </a>
+                  <button
+                    onClick={openWhatsApp}
+                    className="flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors justify-center md:justify-start"
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                    <span>Chat on WhatsApp</span>
+                  </button>
                 </div>
+
+                <p className="text-sm text-muted-foreground mt-4 italic">
+                  Have questions before ordering? I'm looking forward to helping you!
+                </p>
               </div>
             </div>
           </div>
 
           {/* Footer */}
           <div className="text-center mt-16 pt-8 border-t border-border">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <MapPin className="w-4 h-4 text-accent" />
-              <span className="text-sm text-muted-foreground">Serving Local Businesses Across the USA</span>
-            </div>
             <p className="text-sm text-muted-foreground">
               © 2025 Local Digital Ops. All rights reserved.
             </p>

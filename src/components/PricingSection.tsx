@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Check, ArrowRight, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const features = [
   "Custom Mobile-First Design",
@@ -12,7 +13,7 @@ const features = [
 
 const PricingSection = () => {
   return (
-    <section className="section-padding relative">
+    <section id="pricing" className="section-padding relative">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent" />
       
@@ -58,12 +59,14 @@ const PricingSection = () => {
 
               {/* CTA */}
               <div className="text-center">
-                <Button variant="hero" size="xl" className="w-full sm:w-auto">
-                  Claim Your Spot
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
+                <Link to="/checkout">
+                  <Button variant="hero" size="xl" className="w-full sm:w-auto">
+                    Claim Your Spot
+                    <ArrowRight className="w-5 h-5" />
+                  </Button>
+                </Link>
                 <p className="text-sm text-muted-foreground mt-4">
-                  I only build one site per week to ensure quality.
+                  We build max 2 sites per week to ensure quality and speed.
                 </p>
               </div>
             </div>
