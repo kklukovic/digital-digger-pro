@@ -5,6 +5,56 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// In-memory rate limiting store
+const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT_MAX_REQUESTS = 15; // Max requests per window
+const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute window
+
+function getClientIP(req: Request): string {
+  // Check common headers for client IP
+  const cfConnectingIP = req.headers.get("cf-connecting-ip");
+  if (cfConnectingIP) return cfConnectingIP;
+  
+  const xForwardedFor = req.headers.get("x-forwarded-for");
+  if (xForwardedFor) return xForwardedFor.split(",")[0].trim();
+  
+  const xRealIP = req.headers.get("x-real-ip");
+  if (xRealIP) return xRealIP;
+  
+  return "unknown";
+}
+
+function checkRateLimit(clientIP: string): { allowed: boolean; retryAfter?: number } {
+  const now = Date.now();
+  const record = rateLimitStore.get(clientIP);
+  
+  // Clean up expired entries periodically
+  if (rateLimitStore.size > 1000) {
+    for (const [ip, data] of rateLimitStore.entries()) {
+      if (now > data.resetTime) {
+        rateLimitStore.delete(ip);
+      }
+    }
+  }
+  
+  if (!record || now > record.resetTime) {
+    // Create new rate limit window
+    rateLimitStore.set(clientIP, {
+      count: 1,
+      resetTime: now + RATE_LIMIT_WINDOW_MS,
+    });
+    return { allowed: true };
+  }
+  
+  if (record.count >= RATE_LIMIT_MAX_REQUESTS) {
+    const retryAfter = Math.ceil((record.resetTime - now) / 1000);
+    return { allowed: false, retryAfter };
+  }
+  
+  record.count++;
+  return { allowed: true };
+}
+
 const SYSTEM_PROMPT = `You are an AI Receptionist for Local Digital Ops, a company that builds high-performance websites and AI tools for local service businesses (plumbers, roofers, pool cleaners, etc.).
 
 Your name is Alex. You are friendly, professional, and helpful. Your job is to:
@@ -34,6 +84,25 @@ serve(async (req) => {
   }
 
   try {
+    // Rate limiting check
+    const clientIP = getClientIP(req);
+    const rateLimitResult = checkRateLimit(clientIP);
+    
+    if (!rateLimitResult.allowed) {
+      console.log(`Rate limit exceeded for IP: ${clientIP}`);
+      return new Response(
+        JSON.stringify({ error: "Too many requests. Please wait before trying again." }),
+        {
+          status: 429,
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "application/json",
+            "Retry-After": String(rateLimitResult.retryAfter || 60),
+          },
+        }
+      );
+    }
+
     // Validate Content-Length to prevent extremely large payloads
     const contentLength = req.headers.get("content-length");
     if (contentLength && parseInt(contentLength) > 50000) {
