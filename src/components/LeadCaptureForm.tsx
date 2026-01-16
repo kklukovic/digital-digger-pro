@@ -52,15 +52,29 @@ const LeadCaptureForm = () => {
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.from("leads").insert({
-        business_name: result.data.businessName.trim(),
-        website_url: result.data.websiteUrl.trim(),
+      const trimmedData = {
+        businessName: result.data.businessName.trim(),
+        websiteUrl: result.data.websiteUrl.trim(),
         email: result.data.email.trim(),
+      };
+
+      // Save to database
+      const { error } = await supabase.from("leads").insert({
+        business_name: trimmedData.businessName,
+        website_url: trimmedData.websiteUrl,
+        email: trimmedData.email,
       });
 
       if (error) {
         throw error;
       }
+
+      // Send email notification (don't block on failure)
+      supabase.functions.invoke("send-lead-notification", {
+        body: trimmedData,
+      }).catch((err) => {
+        console.error("Email notification failed:", err);
+      });
 
       setIsSubmitted(true);
       toast.success("Demo request submitted successfully!");
