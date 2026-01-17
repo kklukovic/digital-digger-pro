@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 const pricingTiers = [
   {
     name: "The 2026 Reset",
-    focus: "Modernization",
+    focus: "Best for New Foundations",
     price: "$1,000",
-    setup: "one-time",
+    setup: "one-time setup",
     monthly: "$250/mo",
-    monthlyNote: "hosting, support & updates",
-    highlight: "First 6 months FREE — Save $1,500 on monthly fees!",
-    highlightNote: "Pay only the $1,000 setup today",
+    monthlyNote: "after 6 months",
+    highlight: "6 Months Hosting & AI Included FREE!",
+    highlightNote: "Just pay $1,000 today — hosting starts month 7",
     icon: Zap,
     features: [
       "Full Mobile-First Redesign",
@@ -22,16 +22,18 @@ const pricingTiers = [
       "48-Hour Delivery",
     ],
     popular: false,
+    cta: "Start Here",
+    isEnterprise: false,
   },
   {
     name: "The Growth Engine",
-    focus: "Efficiency",
+    focus: "Full Business Scale",
     price: "$2,500",
-    setup: "one-time",
+    setup: "one-time setup",
     monthly: "$1,000/mo",
-    monthlyNote: "hosting, support & updates",
-    highlight: "First 3 months FREE — Save $3,000 on monthly fees!",
-    highlightNote: "Pay only the $2,500 setup today",
+    monthlyNote: "after 3 months",
+    highlight: "3 Months Hosting & Tools Included FREE!",
+    highlightNote: "Just pay $2,500 today — monthly starts month 4",
     icon: Star,
     features: [
       "Everything in Reset +",
@@ -42,16 +44,18 @@ const pricingTiers = [
       "Priority Support",
     ],
     popular: true,
+    cta: "Scale My Business",
+    isEnterprise: false,
   },
   {
     name: "The AI Enterprise",
-    focus: "Scale",
+    focus: "For Serious Operators",
     price: "$7,500",
-    setup: "one-time",
+    setup: "one-time setup",
     monthly: "$2,000/mo",
-    monthlyNote: "hosting, support & updates",
-    highlight: "First 3 months FREE — Save $6,000 on monthly fees!",
-    highlightNote: "Pay only the $7,500 setup today",
+    monthlyNote: "after 3 months",
+    highlight: "3 Months Full Management Included FREE!",
+    highlightNote: "Just pay $7,500 today — monthly starts month 4",
     icon: Crown,
     features: [
       "Everything in Growth +",
@@ -62,6 +66,8 @@ const pricingTiers = [
       "Dedicated Account Manager",
     ],
     popular: false,
+    cta: "Contact for Custom Quote",
+    isEnterprise: true,
   },
 ];
 
@@ -164,16 +170,29 @@ const PricingSection = () => {
 
                   {/* CTA */}
                   <div className="mt-8">
-                    <Link to="/checkout">
-                      <Button 
-                        variant={tier.popular ? "hero" : "heroOutline"} 
-                        size="lg" 
-                        className="w-full"
-                      >
-                        Get Started
-                        <ArrowRight className="w-4 h-4" />
-                      </Button>
-                    </Link>
+                    {tier.isEnterprise ? (
+                      <a href="mailto:kris@localdigitalops.com?subject=AI%20Enterprise%20Custom%20Quote">
+                        <Button 
+                          variant="heroOutline" 
+                          size="lg" 
+                          className="w-full"
+                        >
+                          {tier.cta}
+                          <ArrowRight className="w-4 h-4" />
+                        </Button>
+                      </a>
+                    ) : (
+                      <Link to="/checkout">
+                        <Button 
+                          variant={tier.popular ? "hero" : "heroOutline"} 
+                          size="lg" 
+                          className="w-full"
+                        >
+                          {tier.cta}
+                          <ArrowRight className="w-4 h-4" />
+                        </Button>
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>

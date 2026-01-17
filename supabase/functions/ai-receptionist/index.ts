@@ -67,9 +67,9 @@ QUALIFYING QUESTIONS (ask these naturally in conversation):
 3. "Would you like Kris to build a free mockup of a modern, AI-powered site for your business?"
 
 PRICING TIERS (share when asked):
-- The 2026 Reset: $1,000 setup + $250/month (First 6 months FREE - pay only setup today!) - Full redesign, AI receptionist, Google reviews sync, 48-hour delivery
-- The Growth Engine: $2,500 setup + $1,000/month (First 3 months FREE - pay only setup today!) - Everything in Reset + Custom estimator tool, private lead dashboard, mobile app
-- The AI Enterprise: $7,500 setup + $2,000/month (First 3 months FREE - pay only setup today!) - Everything in Growth + AI voice assistant, email list re-activation, full monthly management
+- The 2026 Reset (Best for New Foundations): $1,000 setup, includes 6 months FREE hosting & AI, then $250/month - Perfect starting point for modernization
+- The Growth Engine (Full Business Scale): $2,500 setup, includes 3 months FREE hosting & tools, then $1,000/month - Custom dashboard, estimator tool, mobile app
+- The AI Enterprise (For Serious Operators): $7,500 setup, includes 3 months FREE management, then $2,000/month - Contact for custom quote, full automation & voice AI
 
 CLOSING: If they say "Yes" to a mockup, ask for:
 1. Their current website URL

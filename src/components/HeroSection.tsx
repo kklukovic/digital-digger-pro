@@ -41,7 +41,7 @@ const HeroSection = () => {
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-10 animate-fade-up" style={{ animationDelay: '0.3s' }}>
               Stop losing customers to a "zombie website" that doesn't work for you. 
               I'll rebuild your site into a <strong className="text-foreground">modern, 24/7 lead-capture engine</strong> in 48 hours.{" "}
-              <span className="text-accent font-semibold">Zero monthly fees. No hidden costs.</span>
+              <span className="text-accent font-semibold">No long-term contracts. Ownership-first model.</span>
             </p>
 
             {/* CTAs */}
