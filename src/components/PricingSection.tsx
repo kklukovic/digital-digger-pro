@@ -24,6 +24,7 @@ const pricingTiers = [
     popular: false,
     cta: "Start Here",
     isEnterprise: false,
+    checkoutPath: "/checkout",
   },
   {
     name: "The Growth Engine",
@@ -46,6 +47,7 @@ const pricingTiers = [
     popular: true,
     cta: "Scale My Business",
     isEnterprise: false,
+    checkoutPath: "/checkout-growth",
   },
   {
     name: "The AI Enterprise",
@@ -182,7 +184,7 @@ const PricingSection = () => {
                         </Button>
                       </a>
                     ) : (
-                      <Link to="/checkout">
+                      <Link to={tier.checkoutPath || "/checkout"}>
                         <Button 
                           variant={tier.popular ? "hero" : "heroOutline"} 
                           size="lg" 
