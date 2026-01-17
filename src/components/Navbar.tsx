@@ -1,12 +1,15 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Zap, Download } from "lucide-react";
+import { Zap, Download, User, Briefcase, HelpCircle, Menu, X } from "lucide-react";
+import { useState } from "react";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleGetStarted = () => {
+    setMobileMenuOpen(false);
     if (location.pathname === "/") {
       const pricingSection = document.getElementById("pricing");
       if (pricingSection) {
@@ -16,6 +19,24 @@ const Navbar = () => {
       navigate("/#pricing");
     }
   };
+
+  const handleScrollTo = (id: string) => {
+    setMobileMenuOpen(false);
+    if (location.pathname === "/") {
+      const section = document.getElementById(id);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      navigate(`/#${id}`);
+    }
+  };
+
+  const navLinks = [
+    { label: "Our Work", id: "portfolio", icon: Briefcase },
+    { label: "About", id: "about", icon: User },
+    { label: "FAQ", id: "faq", icon: HelpCircle },
+  ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass">
@@ -29,11 +50,20 @@ const Navbar = () => {
             <span className="font-bold text-lg">Local Digital Ops</span>
           </Link>
 
-          {/* Nav items */}
-          <div className="flex items-center gap-4">
+          {/* Desktop Nav items */}
+          <div className="hidden md:flex items-center gap-6">
+            {navLinks.map((link) => (
+              <button
+                key={link.id}
+                onClick={() => handleScrollTo(link.id)}
+                className="text-sm text-muted-foreground hover:text-accent transition-colors"
+              >
+                {link.label}
+              </button>
+            ))}
             <Link 
               to="/free-guide"
-              className="hidden sm:flex items-center gap-1 text-sm text-muted-foreground hover:text-accent transition-colors"
+              className="flex items-center gap-1 text-sm text-muted-foreground hover:text-accent transition-colors"
             >
               <Download className="w-4 h-4" />
               Free Guide
@@ -42,7 +72,42 @@ const Navbar = () => {
               Get Started
             </Button>
           </div>
+
+          {/* Mobile menu button */}
+          <button
+            className="md:hidden p-2 text-muted-foreground hover:text-accent transition-colors"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
+
+        {/* Mobile menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-border/50 px-6 py-4 space-y-4">
+            {navLinks.map((link) => (
+              <button
+                key={link.id}
+                onClick={() => handleScrollTo(link.id)}
+                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-accent transition-colors w-full py-2"
+              >
+                <link.icon className="w-4 h-4" />
+                {link.label}
+              </button>
+            ))}
+            <Link 
+              to="/free-guide"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-accent transition-colors py-2"
+            >
+              <Download className="w-4 h-4" />
+              Free Guide
+            </Link>
+            <Button variant="hero" size="default" onClick={handleGetStarted} className="w-full mt-2">
+              Get Started
+            </Button>
+          </div>
+        )}
       </div>
     </nav>
   );
