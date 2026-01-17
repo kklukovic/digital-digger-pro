@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap } from "lucide-react";
 import ContactModal from "@/components/ContactModal";
@@ -33,14 +33,15 @@ const HeroSection = () => {
             {/* Headline */}
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight mb-6 animate-fade-up" style={{ animationDelay: '0.2s' }}>
               I Build High-Performance{" "}
-              <span className="text-gradient">Websites & AI Tools</span>{" "}
-              for Local Service Businesses
+              <span className="text-gradient">Websites & AI Lead-Capture Systems</span>{" "}
+              for Service Businesses
             </h1>
 
             {/* Sub-headline */}
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-up" style={{ animationDelay: '0.3s' }}>
-              Stop paying monthly fees for a "zombie website" that doesn't get leads. 
-              I'll build you a <strong className="text-foreground">24/7 lead-capture system</strong> in 48 hours.
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-10 animate-fade-up" style={{ animationDelay: '0.3s' }}>
+              Stop losing customers to a "zombie website" that doesn't work for you. 
+              I'll rebuild your site into a <strong className="text-foreground">modern, 24/7 lead-capture engine</strong> in 48 hours.{" "}
+              <span className="text-accent font-semibold">Zero monthly fees. No hidden costs.</span>
             </p>
 
             {/* CTAs */}
@@ -49,26 +50,26 @@ const HeroSection = () => {
                 Get My Free Mockup
                 <ArrowRight className="w-5 h-5" />
               </Button>
-              <Link to="/how-it-works">
+              <a href="#portfolio">
                 <Button variant="heroOutline" size="xl">
-                  See How It Works
+                  See My Work
                 </Button>
-              </Link>
+              </a>
             </div>
 
             {/* Trust badges */}
             <div className="mt-16 flex flex-wrap justify-center gap-8 text-muted-foreground animate-fade-up" style={{ animationDelay: '0.5s' }}>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-accent animate-glow-pulse" />
-                <span className="text-sm">48-Hour Delivery</span>
+                <span className="text-sm">Speed</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-accent animate-glow-pulse" style={{ animationDelay: '0.5s' }} />
-                <span className="text-sm">Zero Monthly Fees</span>
+                <span className="text-sm">Results</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-accent animate-glow-pulse" style={{ animationDelay: '1s' }} />
-                <span className="text-sm">AI-Powered</span>
+                <span className="text-sm">24/7 Lead Response</span>
               </div>
             </div>
           </div>
