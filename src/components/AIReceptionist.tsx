@@ -107,7 +107,7 @@ const AIReceptionist = () => {
         ...prev,
         {
           role: "assistant",
-          content: "Sorry, I'm having trouble connecting right now. Please try again or contact Kreso directly on WhatsApp!",
+          content: "Sorry, I'm having trouble connecting right now. Please try again or contact Kris directly on WhatsApp!",
         },
       ]);
     } finally {

@@ -10,7 +10,8 @@ const pricingTiers = [
     setup: "one-time",
     monthly: "$250/mo",
     monthlyNote: "hosting, support & updates",
-    highlight: "SAVE $1,500 — First 6 months FREE!",
+    highlight: "First 6 months FREE — Save $1,500 on monthly fees!",
+    highlightNote: "Pay only the $1,000 setup today",
     icon: Zap,
     features: [
       "Full Mobile-First Redesign",
@@ -29,7 +30,8 @@ const pricingTiers = [
     setup: "one-time",
     monthly: "$1,000/mo",
     monthlyNote: "hosting, support & updates",
-    highlight: null,
+    highlight: "First 3 months FREE — Save $3,000 on monthly fees!",
+    highlightNote: "Pay only the $2,500 setup today",
     icon: Star,
     features: [
       "Everything in Reset +",
@@ -48,7 +50,8 @@ const pricingTiers = [
     setup: "one-time",
     monthly: "$2,000/mo",
     monthlyNote: "hosting, support & updates",
-    highlight: null,
+    highlight: "First 3 months FREE — Save $6,000 on monthly fees!",
+    highlightNote: "Pay only the $7,500 setup today",
     icon: Crown,
     features: [
       "Everything in Growth +",
@@ -126,7 +129,10 @@ const PricingSection = () => {
                   {/* Highlight badge */}
                   {tier.highlight && (
                     <div className="mt-4 bg-accent/10 border border-accent/30 rounded-lg px-3 py-2 text-center">
-                      <span className="text-accent font-semibold text-sm">{tier.highlight}</span>
+                      <span className="text-accent font-semibold text-sm block">{tier.highlight}</span>
+                      {tier.highlightNote && (
+                        <span className="text-muted-foreground text-xs mt-1 block">{tier.highlightNote}</span>
+                      )}
                     </div>
                   )}
 

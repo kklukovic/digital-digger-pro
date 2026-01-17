@@ -46,7 +46,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
 
   const openWhatsApp = () => {
     const message = encodeURIComponent(
-      `Hi Kreso! I'm interested in getting a free mockup for my business.\n\nName: ${formData.name || "[Your Name]"}\nService Type: ${formData.serviceType || "[Your Service]"}`
+      `Hi Kris! I'm interested in getting a free mockup for my business.\n\nName: ${formData.name || "[Your Name]"}\nService Type: ${formData.serviceType || "[Your Service]"}`
     );
     window.open(`https://wa.me/385989821111?text=${message}`, "_blank");
   };

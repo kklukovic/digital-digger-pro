@@ -60,7 +60,7 @@ const FAQSection = () => {
                 <MessageCircle className="w-5 h-5 text-accent" />
               </div>
               <div>
-                <p className="font-semibold text-foreground">Kreso's Assistant</p>
+                <p className="font-semibold text-foreground">Kris's Assistant</p>
                 <p className="text-sm text-muted-foreground">Usually replies instantly</p>
               </div>
               <div className="ml-auto flex items-center gap-1.5">

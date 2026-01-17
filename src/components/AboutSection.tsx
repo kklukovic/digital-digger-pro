@@ -13,7 +13,7 @@ const AboutSection = () => {
               <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden shrink-0 shadow-accent-glow ring-2 ring-accent/30">
                 <img 
                   src={kresoPhoto} 
-                  alt="Kreso Klukovic" 
+                  alt="Kris Klukovic" 
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -21,7 +21,7 @@ const AboutSection = () => {
               {/* Content */}
               <div className="flex-1 text-center md:text-left">
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">
-                  Hi, I'm Kreso.
+                  Hi, I'm Kris.
                 </h2>
                 <p className="text-lg text-muted-foreground mb-6">
                   I help local businesses in the USA modernize their online presence 

@@ -33,7 +33,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`Sending lead notification for: ${businessName}`);
 
-    // Send notification email to Kreso
+    // Send notification email to Kris
     const emailResponse = await resend.emails.send({
       from: "Digital Digger Pro <onboarding@resend.dev>",
       to: ["kreso@localdigitalops.com"],
