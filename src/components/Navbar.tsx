@@ -1,7 +1,8 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Zap, Download, User, Briefcase, HelpCircle, Menu, X } from "lucide-react";
+import { Download, Briefcase, HelpCircle, Menu, X } from "lucide-react";
 import { useState } from "react";
+import logo from "@/assets/logo.png";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -34,7 +35,6 @@ const Navbar = () => {
 
   const navLinks = [
     { label: "Our Work", id: "portfolio", icon: Briefcase },
-    { label: "About", id: "about", icon: User },
     { label: "FAQ", id: "faq", icon: HelpCircle },
   ];
 
@@ -43,11 +43,8 @@ const Navbar = () => {
       <div className="container-tight">
         <div className="flex items-center justify-between h-16 px-6">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-accent flex items-center justify-center">
-              <Zap className="w-5 h-5 text-accent-foreground" />
-            </div>
-            <span className="font-bold text-lg">Local Digital Ops</span>
+          <Link to="/" className="flex items-center">
+            <img src={logo} alt="Local Digital Ops" className="h-10 w-auto" />
           </Link>
 
           {/* Desktop Nav items */}
