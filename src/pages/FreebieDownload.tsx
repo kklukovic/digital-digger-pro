@@ -126,7 +126,7 @@ const FreebieDownload = () => {
               </Button>
             </Link>
             <p className="text-sm text-muted-foreground mt-4">
-              Kreso Klukovic | localdigitalops.com
+              Kris Klukovic | localdigitalops.com
               <br />
               <span className="text-accent">Helping local businesses modernize and automate.</span>
             </p>
