@@ -37,7 +37,7 @@ const Accelerator = () => {
 
   const formatTime = (num: number) => num.toString().padStart(2, "0");
 
-  const stripeLink = "https://buy.stripe.com/your-stripe-link"; // Replace with actual Stripe link
+  const stripeLink = "https://buy.stripe.com/fZu3cwaGp5LneQAfOLaR200";
 
   const faqs = [
     {
