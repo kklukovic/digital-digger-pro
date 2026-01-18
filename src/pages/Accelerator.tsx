@@ -74,7 +74,7 @@ const Accelerator = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative py-16 md:py-24 overflow-hidden">
+      <section className="relative pt-8 pb-16 md:pt-12 md:pb-24 overflow-hidden">
         {/* Background effects */}
         <div className="absolute inset-0 bg-gradient-to-b from-orange-500/10 to-transparent" />
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-orange-500/20 rounded-full blur-3xl" />
@@ -91,30 +91,30 @@ const Accelerator = () => {
               <span className="text-orange-400 font-semibold text-sm">2026 NEW YEAR SPECIAL</span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">
               The 2026 Digital Reset: Your Website Is No Longer a Business Card,{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">
                 It's an AI Sales Machine.
               </span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto px-2">
               I am building <span className="text-orange-400 font-bold">2 fully-functional, AI-integrated websites</span> this week 
               for local business owners who want to automate their sales. Get the $1,500 package for just $349.
             </p>
 
             {/* Countdown Timer */}
-            <div className="flex justify-center gap-4 mb-8">
+            <div className="flex justify-center gap-2 sm:gap-4 mb-8">
               {[
                 { value: timeLeft.hours, label: "Hours" },
                 { value: timeLeft.minutes, label: "Minutes" },
                 { value: timeLeft.seconds, label: "Seconds" },
               ].map((item, index) => (
-                <div key={index} className="bg-gray-900 border border-orange-500/30 rounded-xl p-4 min-w-[80px]">
-                  <div className="text-3xl md:text-4xl font-mono font-bold text-orange-400">
+                <div key={index} className="bg-gray-900 border border-orange-500/30 rounded-xl p-3 sm:p-4 min-w-[70px] sm:min-w-[80px]">
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-mono font-bold text-orange-400">
                     {formatTime(item.value)}
                   </div>
-                  <div className="text-xs text-gray-400 uppercase tracking-wide">{item.label}</div>
+                  <div className="text-[10px] sm:text-xs text-gray-400 uppercase tracking-wide">{item.label}</div>
                 </div>
               ))}
             </div>
@@ -127,7 +127,7 @@ const Accelerator = () => {
               className="relative inline-flex group"
             >
               <div className="absolute -inset-1 bg-gradient-to-r from-orange-600 to-red-600 rounded-xl blur-lg opacity-70 group-hover:opacity-100 transition duration-300 animate-pulse" />
-              <button className="relative bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold text-lg md:text-xl px-8 md:px-12 py-4 md:py-5 rounded-xl hover:scale-105 transition-all duration-300 flex items-center gap-3">
+              <button className="relative bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-12 py-4 md:py-5 rounded-xl hover:scale-105 transition-all duration-300 flex items-center gap-3">
                 SECURE MY SPOT FOR $349
                 <ArrowRight className="group-hover:translate-x-1 transition-transform" />
               </button>
@@ -137,13 +137,13 @@ const Accelerator = () => {
       </section>
 
       {/* Three Pillars Section */}
-      <section className="py-16 md:py-20 bg-gray-900/50">
+      <section className="py-12 md:py-20 bg-gray-900/50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12">
             What You Get in Your <span className="text-orange-400">Digital Reset Package</span>
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
             {[
               {
                 icon: Smartphone,
@@ -163,7 +163,7 @@ const Accelerator = () => {
             ].map((pillar, index) => (
               <div
                 key={index}
-                className="bg-gray-900 border border-gray-800 rounded-2xl p-8 hover:border-orange-500/50 transition-all duration-300 group"
+                className="bg-gray-900 border border-gray-800 rounded-2xl p-6 md:p-8 hover:border-orange-500/50 transition-all duration-300 group"
               >
                 <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <pillar.icon size={32} className="text-white" />
@@ -177,10 +177,10 @@ const Accelerator = () => {
       </section>
 
       {/* Speed to Lead Section */}
-      <section className="py-16 md:py-20">
+      <section className="py-12 md:py-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto bg-gradient-to-br from-orange-500/20 to-red-500/20 border border-orange-500/30 rounded-3xl p-8 md:p-12">
-            <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="max-w-4xl mx-auto bg-gradient-to-br from-orange-500/20 to-red-500/20 border border-orange-500/30 rounded-3xl p-6 md:p-12">
+            <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8 text-center md:text-left">
               <div className="flex-shrink-0">
                 <div className="w-24 h-24 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center">
                   <TrendingUp size={48} className="text-white" />
@@ -204,10 +204,10 @@ const Accelerator = () => {
       </section>
 
       {/* Pricing Box */}
-      <section className="py-16 md:py-20 bg-gray-900/50">
+      <section className="py-12 md:py-20 bg-gray-900/50">
         <div className="container mx-auto px-4">
           <div className="max-w-xl mx-auto">
-            <div className="bg-gray-900 border-2 border-orange-500 rounded-3xl p-8 md:p-10 relative overflow-hidden">
+            <div className="bg-gray-900 border-2 border-orange-500 rounded-3xl p-6 md:p-10 relative overflow-hidden">
               {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-b from-orange-500/10 to-transparent" />
               
@@ -261,9 +261,9 @@ const Accelerator = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 md:py-20">
+      <section className="py-12 md:py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12">
             Frequently Asked <span className="text-orange-400">Questions</span>
           </h2>
 
@@ -289,11 +289,11 @@ const Accelerator = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 border-t border-gray-800">
+      <footer className="py-8 md:py-12 border-t border-gray-800 pb-24 md:pb-12">
         <div className="container mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Users size={20} className="text-orange-500" />
-            <span className="text-gray-300">
+            <span className="text-gray-300 text-sm md:text-base">
               Only <span className="text-orange-400 font-bold">2 spots</span> available per industry to ensure quality.
             </span>
           </div>
