@@ -3,7 +3,7 @@ import { ArrowLeft, CheckCircle, Zap, Bot, Star, Smartphone, Clock, ArrowRight, 
 import { Button } from "@/components/ui/button";
 
 const AcceleratorOffer = () => {
-  const stripeLink = "https://buy.stripe.com/your-stripe-link"; // Replace with actual Stripe link
+  const stripeLink = "https://buy.stripe.com/fZu3cwaGp5LneQAfOLaR200";
 
   const features = [
     {
