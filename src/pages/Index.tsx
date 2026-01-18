@@ -17,7 +17,7 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <PromoBanner />
-      <div className="pt-12 md:pt-14">
+      <div className="pt-16 md:pt-14">
         <Navbar />
       <main>
         <HeroSection />

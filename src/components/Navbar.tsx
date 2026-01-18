@@ -39,7 +39,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass">
+    <nav className="fixed top-14 md:top-12 left-0 right-0 z-40 glass">
       <div className="container-tight">
         <div className="flex items-center justify-between h-16 px-6">
           {/* Logo */}
