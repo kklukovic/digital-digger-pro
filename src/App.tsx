@@ -8,6 +8,8 @@ import HowItWorks from "./pages/HowItWorks";
 import Checkout from "./pages/Checkout";
 import CheckoutGrowth from "./pages/CheckoutGrowth";
 import FreebieDownload from "./pages/FreebieDownload";
+import Accelerator from "./pages/Accelerator";
+import AcceleratorOffer from "./pages/AcceleratorOffer";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +26,8 @@ const App = () => (
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkout-growth" element={<CheckoutGrowth />} />
           <Route path="/free-guide" element={<FreebieDownload />} />
+          <Route path="/accelerator" element={<Accelerator />} />
+          <Route path="/accelerator-offer" element={<AcceleratorOffer />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

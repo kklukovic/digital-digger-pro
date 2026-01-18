@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import PromoBanner from "@/components/PromoBanner";
 import HeroSection from "@/components/HeroSection";
 import ProblemSection from "@/components/ProblemSection";
 import SolutionSection from "@/components/SolutionSection";
@@ -15,7 +16,9 @@ import AIReceptionist from "@/components/AIReceptionist";
 const Index = () => {
   return (
     <div className="min-h-screen">
-      <Navbar />
+      <PromoBanner />
+      <div className="pt-12 md:pt-14">
+        <Navbar />
       <main>
         <HeroSection />
         <ProblemSection />
@@ -30,6 +33,7 @@ const Index = () => {
       </main>
       <WhatsAppButton />
       <AIReceptionist />
+      </div>
     </div>
   );
 };
