@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap } from "lucide-react";
 import ContactModal from "@/components/ContactModal";
+import CallMeButton from "@/components/CallMeButton";
 
 const HeroSection = () => {
   const [contactOpen, setContactOpen] = useState(false);
@@ -50,6 +51,7 @@ const HeroSection = () => {
                 Get My Free Mockup
                 <ArrowRight className="w-5 h-5" />
               </Button>
+              <CallMeButton />
               <a href="#portfolio">
                 <Button variant="heroOutline" size="xl">
                   See My Work
