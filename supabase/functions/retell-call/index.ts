@@ -129,7 +129,8 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    console.log(`Initiating Retell call from ${RETELL_FROM_NUMBER} to ${normalizedPhone}`);
+    const fromNumber = "+12067968788";
+    console.log(`Initiating Retell call from ${fromNumber} to ${normalizedPhone}`);
 
     // Call Retell AI API to create phone call
     const retellResponse = await fetch("https://api.retellai.com/v2/create-phone-call", {
@@ -139,9 +140,9 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from_number: RETELL_FROM_NUMBER,
+        from_number: fromNumber,
         to_number: normalizedPhone,
-        override_agent_id: "agent_93fcd9cd5f87475a09c07e0701",
+        agent_id: "ag_4d36236b338f0d861295286701",
       }),
     });
 
