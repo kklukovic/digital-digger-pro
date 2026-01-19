@@ -14,6 +14,55 @@ interface LeadNotificationRequest {
   email: string;
 }
 
+// Rate limiting store (in-memory, resets on cold start)
+const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT_MAX = 5; // 5 submissions per hour per IP
+const RATE_LIMIT_WINDOW = 3600000; // 1 hour in milliseconds
+
+function checkRateLimit(clientIP: string): { allowed: boolean; retryAfter?: number } {
+  const now = Date.now();
+  const record = rateLimitStore.get(clientIP);
+
+  if (!record || now > record.resetTime) {
+    rateLimitStore.set(clientIP, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+    return { allowed: true };
+  }
+
+  if (record.count >= RATE_LIMIT_MAX) {
+    const retryAfter = Math.ceil((record.resetTime - now) / 1000);
+    return { allowed: false, retryAfter };
+  }
+
+  record.count++;
+  return { allowed: true };
+}
+
+// HTML escape function to prevent XSS in email templates
+function escapeHtml(unsafe: string): string {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+// URL-safe escape (keeps basic URL characters but escapes malicious content)
+function escapeUrl(url: string): string {
+  try {
+    // Validate it's a proper URL structure
+    const urlObj = new URL(url.startsWith('http') ? url : `https://${url}`);
+    // Only allow http and https protocols
+    if (!['http:', 'https:'].includes(urlObj.protocol)) {
+      return '';
+    }
+    return urlObj.toString();
+  } catch {
+    // If URL parsing fails, escape it for display only
+    return escapeHtml(url);
+  }
+}
+
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -21,23 +70,94 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { businessName, websiteUrl, email }: LeadNotificationRequest = await req.json();
+    // Get client IP for rate limiting
+    const clientIP = req.headers.get("cf-connecting-ip") ||
+                     req.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
+                     req.headers.get("x-real-ip") ||
+                     "unknown";
 
-    // Validate input
+    // Check rate limit
+    const rateLimit = checkRateLimit(clientIP);
+    if (!rateLimit.allowed) {
+      console.log(`Rate limit exceeded for IP: ${clientIP}`);
+      return new Response(
+        JSON.stringify({ error: "Too many requests. Please try again later." }),
+        {
+          status: 429,
+          headers: {
+            "Content-Type": "application/json",
+            "Retry-After": String(rateLimit.retryAfter || 3600),
+            ...corsHeaders,
+          },
+        }
+      );
+    }
+
+    const body = await req.json();
+    const { businessName, websiteUrl, email }: LeadNotificationRequest = body;
+
+    // Server-side validation - check presence
     if (!businessName || !websiteUrl || !email) {
+      console.log("Missing required fields in request");
       return new Response(
         JSON.stringify({ error: "Missing required fields" }),
         { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
 
-    console.log(`Sending lead notification for: ${businessName}`);
+    // Validate and trim inputs
+    const trimmedBusinessName = String(businessName).trim();
+    const trimmedWebsiteUrl = String(websiteUrl).trim();
+    const trimmedEmail = String(email).trim().toLowerCase();
+
+    // Length validation (matching client-side zod schema)
+    if (trimmedBusinessName.length > 100) {
+      console.log("Business name too long");
+      return new Response(
+        JSON.stringify({ error: "Business name must be less than 100 characters" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    if (trimmedWebsiteUrl.length > 255) {
+      console.log("Website URL too long");
+      return new Response(
+        JSON.stringify({ error: "Website URL must be less than 255 characters" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    if (trimmedEmail.length > 255) {
+      console.log("Email too long");
+      return new Response(
+        JSON.stringify({ error: "Email must be less than 255 characters" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      console.log("Invalid email format");
+      return new Response(
+        JSON.stringify({ error: "Invalid email format" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    // Escape inputs for HTML
+    const safeBusinessName = escapeHtml(trimmedBusinessName);
+    const safeEmail = escapeHtml(trimmedEmail);
+    const safeWebsiteUrl = escapeUrl(trimmedWebsiteUrl);
+    const displayWebsiteUrl = escapeHtml(trimmedWebsiteUrl);
+
+    console.log(`Sending lead notification for: ${safeBusinessName} from IP: ${clientIP}`);
 
     // Send notification email to Kris
     const emailResponse = await resend.emails.send({
       from: "Digital Digger Pro <onboarding@resend.dev>",
       to: ["kreso@localdigitalops.com"],
-      subject: `🚀 New Demo Request: ${businessName}`,
+      subject: `🚀 New Demo Request: ${safeBusinessName}`,
       html: `
         <!DOCTYPE html>
         <html>
@@ -64,18 +184,18 @@ const handler = async (req: Request): Promise<Response> => {
                 <table style="width: 100%; border-collapse: collapse;">
                   <tr>
                     <td style="padding: 10px 0; color: #7a7a8a; font-size: 14px; width: 120px;">Business Name</td>
-                    <td style="padding: 10px 0; color: #ffffff; font-size: 16px; font-weight: 600;">${businessName}</td>
+                    <td style="padding: 10px 0; color: #ffffff; font-size: 16px; font-weight: 600;">${safeBusinessName}</td>
                   </tr>
                   <tr>
                     <td style="padding: 10px 0; color: #7a7a8a; font-size: 14px; border-top: 1px solid #2a2a4a;">Website URL</td>
                     <td style="padding: 10px 0; color: #00d4ff; font-size: 16px; border-top: 1px solid #2a2a4a;">
-                      <a href="${websiteUrl.startsWith('http') ? websiteUrl : 'https://' + websiteUrl}" target="_blank" style="color: #00d4ff; text-decoration: none;">${websiteUrl}</a>
+                      ${safeWebsiteUrl ? `<a href="${safeWebsiteUrl}" target="_blank" style="color: #00d4ff; text-decoration: none;">${displayWebsiteUrl}</a>` : displayWebsiteUrl}
                     </td>
                   </tr>
                   <tr>
                     <td style="padding: 10px 0; color: #7a7a8a; font-size: 14px; border-top: 1px solid #2a2a4a;">Email</td>
                     <td style="padding: 10px 0; color: #ffffff; font-size: 16px; border-top: 1px solid #2a2a4a;">
-                      <a href="mailto:${email}" style="color: #00d4ff; text-decoration: none;">${email}</a>
+                      <a href="mailto:${safeEmail}" style="color: #00d4ff; text-decoration: none;">${safeEmail}</a>
                     </td>
                   </tr>
                 </table>
@@ -83,11 +203,7 @@ const handler = async (req: Request): Promise<Response> => {
               
               <!-- CTA Buttons -->
               <div style="text-align: center; margin-top: 30px;">
-                <a href="https://wa.me/${email.includes('@') ? '' : email}?text=Hi%20${encodeURIComponent(businessName)}%2C%20I%20received%20your%20demo%20request!" 
-                   style="display: inline-block; background: #25D366; color: #ffffff; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 5px;">
-                  💬 WhatsApp
-                </a>
-                <a href="mailto:${email}?subject=Your%20Demo%20Request%20-%20${encodeURIComponent(businessName)}" 
+                <a href="mailto:${safeEmail}?subject=Your%20Demo%20Request%20-%20${encodeURIComponent(trimmedBusinessName)}" 
                    style="display: inline-block; background: linear-gradient(135deg, #00d4ff 0%, #00a8cc 100%); color: #0a0a0f; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 5px;">
                   ✉️ Send Email
                 </a>
