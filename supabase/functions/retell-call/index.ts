@@ -7,8 +7,8 @@ const corsHeaders = {
 
 // Rate limiting store
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT_MAX = 3; // 3 calls per hour per IP
-const RATE_LIMIT_WINDOW = 3600000; // 1 hour
+const RATE_LIMIT_MAX = 1; // 1 call per 30 minutes per IP
+const RATE_LIMIT_WINDOW = 1800000; // 30 minutes
 
 function checkRateLimit(clientIP: string): { allowed: boolean; retryAfter?: number } {
   const now = Date.now();
