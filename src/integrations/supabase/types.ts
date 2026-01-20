@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      conversations: {
+        Row: {
+          client_ip: string | null
+          created_at: string
+          id: string
+          is_high_intent: boolean
+          lead_email: string | null
+          lead_phone: string | null
+          lead_website_url: string | null
+          messages: Json
+          notification_sent: boolean
+          session_id: string
+          updated_at: string
+          user_agent: string | null
+        }
+        Insert: {
+          client_ip?: string | null
+          created_at?: string
+          id?: string
+          is_high_intent?: boolean
+          lead_email?: string | null
+          lead_phone?: string | null
+          lead_website_url?: string | null
+          messages?: Json
+          notification_sent?: boolean
+          session_id: string
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Update: {
+          client_ip?: string | null
+          created_at?: string
+          id?: string
+          is_high_intent?: boolean
+          lead_email?: string | null
+          lead_phone?: string | null
+          lead_website_url?: string | null
+          messages?: Json
+          notification_sent?: boolean
+          session_id?: string
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           business_name: string
