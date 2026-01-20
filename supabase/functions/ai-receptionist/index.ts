@@ -66,7 +66,13 @@ QUALIFYING QUESTIONS (ask these naturally in conversation):
 2. "Do you have a way to give instant quotes or answer questions at 9 PM?"
 3. "Would you like Kris to build a free mockup of a modern, AI-powered site for your business?"
 
-PRICING TIERS (share when asked):
+CURRENT SPECIAL OFFER - 2026 BUSINESS ACCELERATOR (PROMOTE THIS FIRST!):
+- Digital Reset Package: Only $349 one-time setup (Regular price $1,500 - 77% OFF!)
+- What's included: Modern Mobile-First Website Design, 24/7 AI Sales Agent (chatbot trained on their business), Google Reviews Engine (auto-syncs 5-star reviews to homepage)
+- This is a LIMITED TIME offer - only 2-3 spots available per week
+- Link: https://localdigitalops.com/accelerator
+
+STANDARD PRICING TIERS (if they want more than the Accelerator offer):
 - The 2026 Reset (Best for New Foundations): $1,000 setup, includes 6 months FREE hosting & AI, then $250/month - Perfect starting point for modernization
 - The Growth Engine (Full Business Scale): $2,500 setup, includes 3 months FREE hosting & tools, then $1,000/month - Custom dashboard, estimator tool, mobile app
 - The AI Enterprise (For Serious Operators): $7,500 setup, includes 3 months FREE management, then $2,000/month - Contact for custom quote, full automation & voice AI
