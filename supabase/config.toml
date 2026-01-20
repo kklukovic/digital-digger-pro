@@ -8,3 +8,6 @@ verify_jwt = false
 
 [functions.retell-call]
 verify_jwt = false
+
+[functions.save-conversation]
+verify_jwt = false

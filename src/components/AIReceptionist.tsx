@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bot, Send, X, Minimize2, Maximize2, MessageCircle } from "lucide-react";
+import { Bot, Send, X, Minimize2, Maximize2 } from "lucide-react";
 
 type Message = {
   role: "user" | "assistant";
@@ -9,6 +9,18 @@ type Message = {
 };
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-receptionist`;
+const SAVE_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/save-conversation`;
+
+// Generate or retrieve session ID
+const getSessionId = (): string => {
+  const STORAGE_KEY = "ai_alex_session_id";
+  let sessionId = localStorage.getItem(STORAGE_KEY);
+  if (!sessionId) {
+    sessionId = crypto.randomUUID();
+    localStorage.setItem(STORAGE_KEY, sessionId);
+  }
+  return sessionId;
+};
 
 const AIReceptionist = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +34,7 @@ const AIReceptionist = () => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const sessionId = useRef<string>(getSessionId());
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -30,6 +43,29 @@ const AIReceptionist = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Save conversation to backend (debounced)
+  const saveConversation = useCallback(async (messagesToSave: Message[]) => {
+    // Only save if we have more than the initial greeting
+    if (messagesToSave.length <= 1) return;
+
+    try {
+      await fetch(SAVE_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({
+          sessionId: sessionId.current,
+          messages: messagesToSave,
+          userAgent: navigator.userAgent,
+        }),
+      });
+    } catch (error) {
+      console.error("Failed to save conversation:", error);
+    }
+  }, []);
 
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return;
@@ -101,6 +137,11 @@ const AIReceptionist = () => {
           }
         }
       }
+
+      // Save conversation after AI response is complete
+      const finalMessages = [...newMessages, { role: "assistant" as const, content: assistantContent }];
+      saveConversation(finalMessages);
+
     } catch (error) {
       console.error("Chat error:", error);
       setMessages((prev) => [
