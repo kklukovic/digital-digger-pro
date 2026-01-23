@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Zap, Smartphone, Bot, Star, Clock, CheckCircle, ArrowRight, Shield, Users, TrendingUp } from "lucide-react";
+import { Zap, Smartphone, Bot, Star, Clock, CheckCircle, ArrowRight, Shield, Users, TrendingUp, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -8,6 +8,32 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+
+import portfolioEverest from "@/assets/portfolio-everest.png";
+import portfolioMimi from "@/assets/portfolio-mimi.png";
+import portfolioPaws from "@/assets/portfolio-paws.png";
+import portfolioTipdana from "@/assets/portfolio-tipdana.png";
+
+const portfolioExamples = [
+  {
+    title: "TipDana Pro",
+    description: "Sports analytics & tipping platform",
+    image: portfolioTipdana,
+    url: "https://pro.tipdana.com",
+  },
+  {
+    title: "Paws Care",
+    description: "Pet care booking solution",
+    image: portfolioPaws,
+    url: "https://paws-care.localdigitalops.com/",
+  },
+  {
+    title: "Cook with Mimi",
+    description: "Culinary blog & recipe platform",
+    image: portfolioMimi,
+    url: "https://cookwithmimi.com/",
+  },
+];
 
 const Accelerator = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -225,6 +251,47 @@ const Accelerator = () => {
         </div>
       </section>
 
+      {/* Portfolio Examples Section */}
+      <section className="py-12 md:py-20">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-4">
+            Real Websites. <span className="text-orange-400">Real Results.</span>
+          </h2>
+          <p className="text-gray-400 text-center mb-8 md:mb-12 max-w-2xl mx-auto">
+            See some of the digital engines we've built for businesses just like yours.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {portfolioExamples.map((project, index) => (
+              <a
+                key={index}
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden hover:border-orange-500/50 transition-all duration-300"
+              >
+                <div className="aspect-video overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={`${project.title} screenshot`}
+                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="font-bold text-white">{project.title}</h3>
+                      <p className="text-gray-400 text-sm">{project.description}</p>
+                    </div>
+                    <ExternalLink className="text-orange-500 opacity-0 group-hover:opacity-100 transition-opacity" size={18} />
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Pricing Box */}
       <section className="py-12 md:py-20 bg-gray-900/50">
         <div className="container mx-auto px-4">
@@ -264,8 +331,8 @@ const Accelerator = () => {
                 <div className="bg-orange-500/10 border border-orange-500/30 rounded-xl p-4 mb-6">
                   <p className="text-orange-400 font-bold text-sm mb-1">🎁 BONUS (First 2 Clients Only)</p>
                   <p className="text-gray-300 text-sm">
-                    <span className="font-bold">10 Social Media Posts</span> — professionally designed graphics ready to post. 
-                    Value: $200. Yours FREE.
+                    <span className="font-bold">30 Social Media Posts</span> — professionally designed graphics perfectly tailored to your business and brand. Ready to post. 
+                    Value: $500. Yours FREE.
                   </p>
                 </div>
 
