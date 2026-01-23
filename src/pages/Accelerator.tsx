@@ -118,7 +118,7 @@ const Accelerator = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-500"></span>
               </span>
-              <span className="text-orange-400 font-semibold text-sm">2026 NEW YEAR SPECIAL</span>
+              <span className="text-orange-400 font-semibold text-sm">LIMITED AVAILABILITY — ONLY 2 SPOTS LEFT</span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">
