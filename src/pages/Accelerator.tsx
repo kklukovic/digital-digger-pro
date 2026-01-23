@@ -53,8 +53,12 @@ const Accelerator = () => {
       answer: "Absolutely not. We handle everything from setup to training. You just focus on your business.",
     },
     {
-      question: "What happens after the 3 months of hosting?",
-      answer: "After the included 3 months, hosting continues at a minimal monthly rate. We'll discuss options before it expires.",
+      question: "What happens after the 6 months of free hosting?",
+      answer: "After the included 6 months, hosting continues at a minimal monthly rate ($47/month). We'll discuss options before it expires.",
+    },
+    {
+      question: "What's the 'Speed to Lead' guarantee?",
+      answer: "Our AI responds to every visitor within 5 seconds — even at 3 AM. 78% of customers buy from whoever responds first. You'll never lose a lead to slow response times again.",
     },
   ];
 
@@ -92,15 +96,16 @@ const Accelerator = () => {
             </div>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">
-              The 2026 Digital Reset: Your Website Is No Longer a Business Card,{" "}
+              The 2026 Digital Reset:{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">
-                It's an AI Sales Machine.
+                Your AI Sales Machine That Never Sleeps.
               </span>
             </h1>
 
             <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto px-2">
-              I am building <span className="text-orange-400 font-bold">2 fully-functional, AI-integrated websites</span> this week 
-              for local business owners who want to automate their sales. Get the $1,500 package for just $349.
+              Get a <span className="text-orange-400 font-bold">blazing-fast, mobile-first website</span> with a{" "}
+              <span className="text-orange-400 font-bold">24/7 AI Receptionist</span> that responds in 5 seconds — even at 3 AM.
+              Plus <span className="text-orange-400 font-bold">6 months of free hosting</span> included.
             </p>
 
             {/* Countdown Timer */}
@@ -143,28 +148,42 @@ const Accelerator = () => {
             What You Get in Your <span className="text-orange-400">Digital Reset Package</span>
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto">
             {[
               {
                 icon: Smartphone,
-                title: "Modern Mobile-First Design",
-                description: "Your site will look better than your biggest competitor's. Designed to convert visitors into customers on any device.",
+                title: "Modern \"2026 Reset\" Website",
+                description: "Blazing-fast, mobile-first design that loads in under 2 seconds. Optimized to convert visitors into paying customers.",
+                highlight: "Speed & Mobile Focus",
               },
               {
                 icon: Bot,
-                title: "24/7 AI Sales Agent",
-                description: "A chatbot trained on your business data that answers questions and captures leads while you sleep.",
+                title: "24/7 AI Receptionist (Chat)",
+                description: "Your \"wow\" factor — an AI assistant that answers questions, qualifies leads, and books appointments while you sleep. Responds in 5 seconds, even at 3 AM.",
+                highlight: "Speed to Lead Guarantee",
               },
               {
                 icon: Star,
-                title: "Google Reviews Engine",
-                description: "Automatic syncing of your best 5-star reviews to the homepage to build instant trust with visitors.",
+                title: "Google Reviews Sync",
+                description: "Automatic syncing of your best 5-star reviews to the homepage. Instant social proof that builds trust with every visitor.",
+                highlight: "Auto-Updated Trust",
+              },
+              {
+                icon: Zap,
+                title: "6 Months Free Hosting",
+                description: "Premium hosting included for 6 full months. No hidden fees, no surprises. Focus on growing your business.",
+                highlight: "Zero Extra Costs",
               },
             ].map((pillar, index) => (
               <div
                 key={index}
-                className="bg-gray-900 border border-gray-800 rounded-2xl p-6 md:p-8 hover:border-orange-500/50 transition-all duration-300 group"
+                className="bg-gray-900 border border-gray-800 rounded-2xl p-6 md:p-8 hover:border-orange-500/50 transition-all duration-300 group relative overflow-hidden"
               >
+                {pillar.highlight && (
+                  <span className="absolute top-4 right-4 bg-orange-500/20 text-orange-400 text-xs font-bold px-3 py-1 rounded-full">
+                    {pillar.highlight}
+                  </span>
+                )}
                 <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <pillar.icon size={32} className="text-white" />
                 </div>
@@ -182,20 +201,23 @@ const Accelerator = () => {
           <div className="max-w-4xl mx-auto bg-gradient-to-br from-orange-500/20 to-red-500/20 border border-orange-500/30 rounded-3xl p-6 md:p-12">
             <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8 text-center md:text-left">
               <div className="flex-shrink-0">
-                <div className="w-24 h-24 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center">
-                  <TrendingUp size={48} className="text-white" />
+                <div className="w-24 h-24 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center animate-pulse">
+                  <Clock size={48} className="text-white" />
                 </div>
               </div>
               <div>
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">
-                  Why <span className="text-orange-400">Speed to Lead</span> Matters
+                  ⚡ <span className="text-orange-400">Speed to Lead</span> Guarantee
                 </h2>
                 <p className="text-xl text-gray-300 mb-4">
-                  <span className="text-orange-400 font-bold text-3xl">78%</span> of customers buy from the business that responds first.
+                  <span className="text-orange-400 font-bold text-4xl">5 seconds.</span> That's how fast your AI responds. Even at <span className="text-orange-400 font-bold">3 AM.</span>
                 </p>
-                <p className="text-gray-400">
-                  Our AI Assistant ensures you are always first. While your competitors are sleeping or busy, 
-                  your AI is answering questions, qualifying leads, and booking appointments 24/7.
+                <p className="text-gray-400 mb-4">
+                  <span className="text-orange-400 font-bold text-2xl">78%</span> of customers buy from whoever responds first. 
+                  While your competitors are sleeping, your AI is closing deals.
+                </p>
+                <p className="text-gray-300 font-semibold">
+                  This is the unfair advantage that separates winners from everyone else.
                 </p>
               </div>
             </div>
@@ -225,11 +247,11 @@ const Accelerator = () => {
 
                 <ul className="space-y-4 mb-8">
                   {[
-                    "Modern Mobile-First Design",
-                    "AI Assistant Training",
+                    "Modern \"2026 Reset\" Website (Speed + Mobile)",
+                    "24/7 AI Receptionist (Chat)",
                     "Google Reviews Sync",
                     "Lead Automation Setup",
-                    "3 Months Hosting Included",
+                    "6 Months FREE Hosting",
                   ].map((feature, index) => (
                     <li key={index} className="flex items-center gap-3">
                       <CheckCircle className="text-orange-500 flex-shrink-0" size={20} />
@@ -237,6 +259,15 @@ const Accelerator = () => {
                     </li>
                   ))}
                 </ul>
+
+                {/* Bonus P.S. */}
+                <div className="bg-orange-500/10 border border-orange-500/30 rounded-xl p-4 mb-6">
+                  <p className="text-orange-400 font-bold text-sm mb-1">🎁 BONUS (First 2 Clients Only)</p>
+                  <p className="text-gray-300 text-sm">
+                    <span className="font-bold">10 Social Media Posts</span> — professionally designed graphics ready to post. 
+                    Value: $200. Yours FREE.
+                  </p>
+                </div>
 
                 <a
                   href={stripeLink}
