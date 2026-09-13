@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Anyone can update their session" ON public.conversations;
