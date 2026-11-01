@@ -7,7 +7,7 @@ import {
   Loader2,
   Send,
 } from "lucide-react";
-import { goals, requestOptions, type NwiRequest } from "@/lib/nwi-services";
+import { goals, requestOptions, nwiPackage, packageOfferActive, type NwiRequest } from "@/lib/nwi-services";
 import {
   enquirySummary,
   sendNwiEnquiry,
@@ -379,6 +379,12 @@ export default function NwiEnquiry({
               <option>I have a specific date, noted above</option>
             </select>
           </label>
+          {data.services.includes(nwiPackage.id) && (
+            <p className="nwi-package-form-note">
+              <strong>Complete Business Upgrade: {packageOfferActive() ? nwiPackage.offerPrice : nwiPackage.regularPrice} project fee.</strong>
+              {" "}Covers the package scope shown above. Extras and ongoing software, hosting and usage cost more. {packageOfferActive() ? `The introductory offer ends ${nwiPackage.deadlineLabel} and cannot be combined with the 20% listing discount.` : "We confirm the scope and total in writing."}
+            </p>
+          )}
           <label htmlFor="nwi-listed">
             20% discount: are you listed on LakeCountyNWI.com?
             <select
@@ -435,6 +441,12 @@ export default function NwiEnquiry({
                   : "Help choosing the right starting point"}
               </dd>
             </div>
+            {data.services.includes(nwiPackage.id) && (
+              <div>
+                <dt>Package fee</dt>
+                <dd>{packageOfferActive() ? nwiPackage.offerPrice : nwiPackage.regularPrice} for the included setup scope. Extras and ongoing costs separate. Written quote before commitment.</dd>
+              </div>
+            )}
             <div>
               <dt>Timing</dt>
               <dd>{data.timeline}</dd>
@@ -442,7 +454,9 @@ export default function NwiEnquiry({
             <div>
               <dt>Listing discount</dt>
               <dd>
-                {data.listed === "Yes, I am listed"
+                {data.services.includes(nwiPackage.id) && packageOfferActive()
+                  ? "The 50% package promotion cannot be combined with the 20% listing discount"
+                  : data.listed === "Yes, I am listed"
                   ? "20% off eligible service fees, after listing verification"
                   : data.listed === "Not sure"
                     ? "Please check my eligibility"

@@ -1,3 +1,5 @@
+import { nwiPackage, packageOfferActive } from "./nwi-services";
+
 export type NwiEnquiry = {
   goal: string;
   services: string[];
@@ -25,6 +27,10 @@ export function enquirySummary(data: NwiEnquiry): string {
     `Town / service area: ${data.city.trim() || "Not provided"}`,
     `Main goal: ${data.goal}`,
     `Interested in: ${data.services.join(", ") || "Please recommend a starting point"}`,
+    ...(data.services.includes(nwiPackage.name) ? [
+      `Package pricing shown: ${packageOfferActive() ? nwiPackage.offerPrice + " introductory fee, offer ends " + nwiPackage.deadlineLabel : nwiPackage.regularPrice + " standard fee"}; included setup scope only. Extras, software, hosting and usage separate. Written quote required.`,
+      ...(packageOfferActive() ? ["Discount rule: 50% package offer cannot be combined with the 20% directory listing discount."] : []),
+    ] : []),
     `Timing: ${data.timeline}`,
     `Directory discount eligibility: ${data.listed}`,
     `Listing link: ${data.listed === "Yes, I am listed" ? data.listingUrl.trim() || "Please verify by business name" : "Not provided"}`,

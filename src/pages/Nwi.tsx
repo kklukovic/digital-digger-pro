@@ -15,7 +15,7 @@ import {
   Sparkles,
   X,
 } from "lucide-react";
-import { nwiServices, type NwiRequest } from "@/lib/nwi-services";
+import { nwiServices, nwiPackage, packageOfferActive, type NwiRequest } from "@/lib/nwi-services";
 import NwiEnquiry from "@/components/NwiEnquiry";
 import portrait from "@/assets/kreso-photo.png";
 import pawsExample from "@/assets/portfolio-paws.png";
@@ -67,7 +67,7 @@ const faqs = [
   ],
   [
     "How much will this cost?",
-    "The price depends on the agreed work. Before you commit, your quote will explain the deliverables, project fee and any ongoing charges. Software subscriptions, hosting, call usage and advertising costs are identified separately. The free online business audit has no charge.",
+    "Individual services have starting prices for the scope shown in the pricing section. A larger or more complex project can cost more. The Complete Business Upgrade has its own defined scope and project fee. Before you commit, your written quote separates setup, extras and ongoing costs such as hosting, software and call usage. The free online business audit is $0.",
   ],
   [
     "Do I have to buy everything together?",
@@ -96,6 +96,7 @@ export default function Nwi() {
   const [demo, setDemo] = useState(0);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [request, setRequest] = useState<NwiRequest | null>(null);
+  const introductoryOffer = packageOfferActive();
   const service =
     nwiServices.find((item) => item.id === active) || nwiServices[0];
 
@@ -183,7 +184,7 @@ export default function Nwi() {
           <Brand />
           <nav className="nwi-desktop-nav" aria-label="Main navigation">
             <a href="#nwi-services">What we do</a>
-            <a href="#nwi-audits">Business audits</a>
+            <a href="#nwi-pricing">Prices & package</a>
             <a href="#nwi-process">How it works</a>
           </nav>
           <a
@@ -213,8 +214,8 @@ export default function Nwi() {
             <a href="#nwi-services" onClick={() => setMobileMenu(false)}>
               What we do
             </a>
-            <a href="#nwi-audits" onClick={() => setMobileMenu(false)}>
-              Business audits
+            <a href="#nwi-pricing" onClick={() => setMobileMenu(false)}>
+              Prices & package
             </a>
             <a href="#nwi-process" onClick={() => setMobileMenu(false)}>
               How it works
@@ -477,11 +478,19 @@ export default function Nwi() {
                     <strong>How we deliver:</strong> {service.delivery}
                   </p>
                   <p>
+                    <strong>Starting scope:</strong> {service.starterScope}
+                  </p>
+                  <p>
                     <strong>How pricing works:</strong> {service.costs}
                   </p>
                 </details>
                 <div className="nwi-service-bottom">
-                  <span>A clear quote before you commit.</span>
+                  <div className="nwi-service-price">
+                    <small>STARTS FROM</small>
+                    <strong>{service.price}</strong>
+                    <span>{service.priceNote}</span>
+                    <small>Final price can be higher. Scope agreed in writing.</small>
+                  </div>
                   <a
                     href="#nwi-request"
                     className="nwi-btn"
@@ -497,6 +506,65 @@ export default function Nwi() {
                 </div>
               </article>
             </div>
+          </div>
+        </section>
+
+        <section className="nwi-pricing-section" id="nwi-pricing">
+          <div className="nwi-wrap nwi-section">
+            <div className="nwi-section-head">
+              <div>
+                <p className="nwi-kicker">CLEAR STARTING POINTS</p>
+                <h2>Start with one improvement.<br />Or connect the whole picture.</h2>
+              </div>
+              <p>Choose the help you need now. Every starting price below covers a defined scope, with a written quote before any paid work.</p>
+            </div>
+            <div className="nwi-price-grid">
+              {nwiServices.map((item) => (
+                <article className="nwi-price-card" key={item.id}>
+                  <item.icon size={23} aria-hidden="true" />
+                  <h3>{item.name}</h3>
+                  <p className="nwi-price-amount"><span>Starts from</span><strong>{item.price}</strong></p>
+                  <p className="nwi-price-basis">{item.priceNote}</p>
+                  <p>{item.starterScope}</p>
+                  <a href="#nwi-request" className="nwi-link" onClick={() => enquire([item.id], `I would like a quote for ${item.name.toLowerCase()}`)}>Get my quote <ArrowUpRight size={16} /></a>
+                </article>
+              ))}
+            </div>
+            <p className="nwi-price-disclaimer">All prices are in USD. Starting prices are minimums for the scope described, not a fixed price for every project. More pages, locations, content, custom features or integrations can increase the price. Hosting, domains, subscriptions, AI usage, phone minutes, ad spend and applicable taxes are separate. We itemize expected ongoing costs before you agree.</p>
+            <article className="nwi-package" aria-labelledby="nwi-package-title">
+              <div className="nwi-package-main">
+                <span className="nwi-package-label">{introductoryOffer ? "LIMITED INTRODUCTORY OFFER · 50% OFF" : "ONE CONNECTED BUSINESS SETUP"}</span>
+                <h3 id="nwi-package-title">Complete Business<br />Upgrade.</h3>
+                <p className="nwi-package-lead">A clearer website. Useful content. Answers after hours. A better way to follow up.</p>
+                <p>Bring the pieces together in one project, with one person coordinating the setup and testing how they work together.</p>
+                <div className="nwi-package-price">
+                  {introductoryOffer && <span>Standard package <s>{nwiPackage.regularPrice}</s></span>}
+                  <strong>{introductoryOffer ? nwiPackage.offerPrice : nwiPackage.regularPrice}</strong>
+                  <span>One-time project fee for the scope below.</span>
+                  {introductoryOffer && <b>Save $3,750 on setup.</b>}
+                </div>
+                <a href="#nwi-request" className="nwi-btn" onClick={() => enquire([nwiPackage.id], `I am interested in the Complete Business Upgrade (${introductoryOffer ? "$3,750 introductory project fee" : "$7,500 project fee"}; ongoing costs separate)`)}>Discuss my complete upgrade <ArrowUpRight size={18} /></a>
+                <small>No payment at this step. We confirm fit, scope and running costs first.</small>
+              </div>
+              <div className="nwi-package-deliverables">
+                <h4>What your package includes</h4>
+                <ul>
+                  {[
+                    ["Website build or improvements", "A new website of up to 5 pages, or equivalent improvements to your current site. Mobile layout, enquiry form and clear calls to action, with 2 revision rounds."],
+                    ["Website copy + launch content", "Copy for the included pages, plus 12 social post drafts with captions and simple branded graphics. Built from your approved facts and supplied photos."],
+                    ["Google Business Profile improvements", "An update of 1 existing profile: business details, services, description and useful photo guidance. Verification and rankings remain with Google."],
+                    ["AI website chat assistant", "Setup on 1 website, approved answers for up to 50 common questions, enquiry capture and a clear handoff to your team."],
+                    ["AI voice receptionist", "1 incoming-call flow for after-hours or overflow calls, routine answers and caller summaries. Number setup and routing depend on your provider."],
+                    ["Enquiry follow-up", "1 workflow with an acknowledgement and 1 follow-up email, configured with your agreed sending tools."],
+                    ["Pro audit, launch testing + handover", "A written priority plan, end-to-end setup checks, a handover session and 30 days of support for fixes to the delivered setup."],
+                  ].map(([title, detail]) => <li key={title}><CheckCircle2 size={18} aria-hidden="true" /><div><strong>{title}</strong><p>{detail}</p></div></li>)}
+                </ul>
+              </div>
+              <div className="nwi-package-terms">
+                <p><strong>What is separate:</strong> hosting, domains, AI/chat subscriptions, phone numbers and minutes, email tools, ad spend and applicable taxes. Ongoing content, maintenance and support beyond the included 30 days need a separate plan. Custom integrations, ecommerce and additional pages or locations are quoted as extras.</p>
+                <p>{introductoryOffer ? <><strong>Offer ends {nwiPackage.deadlineLabel}.</strong> Confirm the written scope and book your project by then to receive the introductory fee. Work outside the included scope can increase the total.</> : <>The introductory offer has ended. The standard fee covers the scope listed above; extra work is quoted separately.</>} The package promotion cannot be combined with the 20% directory listing discount.</p>
+              </div>
+            </article>
           </div>
         </section>
 
@@ -559,7 +627,7 @@ export default function Nwi() {
             <article className="nwi-audit-card nwi-audit-pro">
               <div className="nwi-audit-top">
                 <span>THE DEEPER REVIEW</span>
-                <span className="nwi-paid-pill">PAID SERVICE</span>
+                <span className="nwi-paid-pill">FROM $249 · ONE-TIME</span>
               </div>
               <h3>Pro Business Audit</h3>
               <p>
@@ -598,7 +666,9 @@ export default function Nwi() {
               </div>
               <div className="nwi-audit-pro-bottom">
                 <p>
-                  Fixed scope and price agreed first.
+                  Starts from $249 for one business and location.
+                  <br />
+                  Broader reviews can cost more. Fixed quote agreed first.
                   <br />
                   Implementation quoted separately.
                 </p>
@@ -823,7 +893,7 @@ export default function Nwi() {
               <p>
                 Listing verification required. Excludes third-party software,
                 hosting, usage charges, ad spend, taxes and directory plans.
-                Cannot be combined with another promotion.
+                Cannot be combined with the Complete Business Upgrade introductory offer or another promotion.
               </p>
             </div>
           </div>

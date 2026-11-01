@@ -10,6 +10,9 @@ import {
 export const nwiServices = [
   {
     id: "website",
+    price: "$750",
+    priceNote: "One-time website improvement project. New websites start at $1,500.",
+    starterScope: "A focused refresh of one existing page, clearer copy and contact buttons. New-build starting scope: up to 3 pages with supplied business information.",
     name: "Website build or redesign",
     shortName: "Your website",
     icon: Globe2,
@@ -35,6 +38,9 @@ export const nwiServices = [
   },
   {
     id: "google",
+    price: "$250",
+    priceNote: "One-time profile improvement.",
+    starterScope: "One existing business profile: categories, service details, description and contact information. Ongoing management is optional.",
     name: "Google Business Profile help",
     shortName: "Your Google profile",
     icon: Search,
@@ -59,6 +65,9 @@ export const nwiServices = [
   },
   {
     id: "chat",
+    price: "$750",
+    priceNote: "One-time assistant setup.",
+    starterScope: "One website, an approved business knowledge base, routine questions and enquiry capture. Software, usage and ongoing support are extra.",
     name: "AI website assistant",
     shortName: "Website AI assistant",
     icon: MessageSquare,
@@ -84,6 +93,9 @@ export const nwiServices = [
   },
   {
     id: "phone",
+    price: "$1,250",
+    priceNote: "One-time voice assistant setup.",
+    starterScope: "One business, one incoming-call flow and a caller summary. Phone numbers, call minutes, software and ongoing support are extra.",
     name: "AI phone receptionist",
     shortName: "Phone answering",
     icon: PhoneCall,
@@ -108,6 +120,9 @@ export const nwiServices = [
   },
   {
     id: "social",
+    price: "$350",
+    priceNote: "Per batch of 8 social post drafts.",
+    starterScope: "Captions and simple branded graphics using your supplied photos and business information. Filming, paid ads and ongoing posting are extra.",
     name: "Social media content",
     shortName: "Social content",
     icon: PenLine,
@@ -134,6 +149,9 @@ export const nwiServices = [
   },
   {
     id: "followup",
+    price: "$500",
+    priceNote: "One-time follow-up setup.",
+    starterScope: "One enquiry workflow with an acknowledgement and one follow-up email using your existing tools. Sending software and usage are extra.",
     name: "Email & enquiry follow-up",
     shortName: "Customer follow-up",
     icon: Mail,
@@ -159,7 +177,21 @@ export const nwiServices = [
   },
 ] as const;
 
+export const nwiPackage = {
+  id: "complete-package",
+  name: "Complete Business Upgrade",
+  regularPrice: "$7,500",
+  offerPrice: "$3,750",
+  offerEnds: "2026-12-01T06:00:00Z",
+  deadlineLabel: "November 30, 2026, 11:59 pm Central Time",
+} as const;
+
+export function packageOfferActive(now = Date.now()) {
+  return now < Date.parse(nwiPackage.offerEnds);
+}
+
 export const requestOptions = [
+  { id: nwiPackage.id, name: nwiPackage.name },
   { id: "free-audit", name: "Free online business audit" },
   { id: "pro-audit", name: "Pro Business Audit" },
   ...nwiServices.map((s) => ({ id: s.id, name: s.name })),
