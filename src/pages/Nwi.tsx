@@ -1,0 +1,920 @@
+import { useEffect, useState } from "react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  BadgePercent,
+  Check,
+  CheckCircle2,
+  ChevronDown,
+  Clock3,
+  FileSearch,
+  Globe2,
+  Mail,
+  Menu,
+  MessageSquare,
+  Sparkles,
+  X,
+} from "lucide-react";
+import { nwiServices, type NwiRequest } from "@/lib/nwi-services";
+import NwiEnquiry from "@/components/NwiEnquiry";
+import portrait from "@/assets/kreso-photo.png";
+import pawsExample from "@/assets/portfolio-paws.png";
+import mimiExample from "@/assets/portfolio-mimi.png";
+import "./nwi.css";
+
+function Brand() {
+  return (
+    <a className="nwi-brand" href="/nwi" aria-label="Local Digital Ops home">
+      <span className="nwi-brand-mark" aria-hidden="true">
+        <i />
+        <i />
+        <i />
+        <i />
+      </span>
+      <span>
+        local<span>digital</span>ops<small>BUILT FOR BUSINESS</small>
+      </span>
+    </a>
+  );
+}
+
+const demoQuestions = [
+  {
+    question: "Do you cover my town?",
+    answer:
+      "Which town is the job in? I can help you check the business's approved service information and collect details for the team to confirm anything uncertain.",
+  },
+  {
+    question: "Can I get a quote?",
+    answer:
+      "Tell me what you need help with and leave your preferred contact details. The team can review your enquiry and follow up with a quote.",
+  },
+  {
+    question: "Can you come out tonight?",
+    answer:
+      "I cannot confirm a visit or live availability. I can take your details for the team to review when they are available.",
+  },
+];
+
+const faqs = [
+  [
+    "I do not know which service I need. Where should I start?",
+    "Choose 'I am not sure what I need' in the short questionnaire, or request the free audit. We will look at your business and recommend a sensible starting point. You can decide after you understand the scope and price.",
+  ],
+  [
+    "What does the free audit include?",
+    "A short manual review of your public website and business presence, with a few useful things to improve. It is a starting point, rather than a full technical investigation. If you need a deeper competitor review and a written action plan, ask about the paid Pro Business Audit.",
+  ],
+  [
+    "How much will this cost?",
+    "The price depends on the agreed work. Before you commit, your quote will explain the deliverables, project fee and any ongoing charges. Software subscriptions, hosting, call usage and advertising costs are identified separately. The free online business audit has no charge.",
+  ],
+  [
+    "Do I have to buy everything together?",
+    "You can request one service or a combination. A website project can stand on its own. Website chat, phone answering and ongoing content are separate services, so you can choose the parts your business needs.",
+  ],
+  [
+    "Will the AI assistant make promises on my behalf?",
+    "We agree the information it can use and the questions it should hand off. Final quotes, live availability and decisions that need your judgement stay with your team unless a specific, tested integration is agreed. AI can make mistakes, so realistic testing and clear boundaries matter.",
+  ],
+  [
+    "What do you need from me to get started?",
+    "Usually your business details, services, service area, available photos and the outcome you want to improve. We request account access only where the agreed work needs it, and explain what is needed before implementation.",
+  ],
+  [
+    "How does the directory discount work?",
+    "A business listed on LakeCountyNWI.com, including a free listing, can receive 20% off our eligible paid service fees. We verify the listing and show the saving in your quote. Third-party subscriptions, hosting, usage charges, advertising spend, taxes and directory plans are excluded. It cannot be combined with another promotion.",
+  ],
+  [
+    "Can you guarantee a certain number of leads or a Google ranking?",
+    "No. We can agree and deliver specific improvements to your website, business information and enquiry process. Customer demand, competition and the platforms themselves also affect results. We explain what each project can reasonably address.",
+  ],
+];
+
+export default function Nwi() {
+  const [active, setActive] = useState("website");
+  const [demo, setDemo] = useState(0);
+  const [mobileMenu, setMobileMenu] = useState(false);
+  const [request, setRequest] = useState<NwiRequest | null>(null);
+  const service =
+    nwiServices.find((item) => item.id === active) || nwiServices[0];
+
+  useEffect(() => {
+    const previousTitle = document.title;
+    document.title =
+      "Websites & AI Assistants for Local Businesses | Local Digital Ops NWI";
+    const originals: Array<{
+      element: Element;
+      previous: string | null;
+      created: boolean;
+    }> = [];
+    const tags = [
+      [
+        "name",
+        "description",
+        "Clear websites, Google Business Profile help and practical AI assistants for local businesses in Northwest Indiana. Start with a free business audit or request a tailored quote.",
+      ],
+      [
+        "property",
+        "og:title",
+        "Help your next customer choose you | Local Digital Ops",
+      ],
+      [
+        "property",
+        "og:description",
+        "Practical website and AI services, explained in plain English. Find the right next step for your business.",
+      ],
+      ["property", "og:url", "https://localdigitalops.com/nwi"],
+    ];
+    for (const [attribute, name, content] of tags) {
+      let element = document.querySelector(`meta[${attribute}="${name}"]`);
+      const created = !element;
+      if (!element) {
+        element = document.createElement("meta");
+        element.setAttribute(attribute, name);
+        document.head.append(element);
+      }
+      originals.push({
+        element,
+        previous: element.getAttribute("content"),
+        created,
+      });
+      element.setAttribute("content", content);
+    }
+    let canonical = document.querySelector('link[rel="canonical"]');
+    const created = !canonical;
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.append(canonical);
+    }
+    const oldCanonical = canonical.getAttribute("href");
+    canonical.setAttribute("href", "https://localdigitalops.com/nwi");
+    return () => {
+      document.title = previousTitle;
+      originals.forEach(({ element, previous, created: wasCreated }) => {
+        if (wasCreated) element.remove();
+        else if (previous === null) element.removeAttribute("content");
+        else element.setAttribute("content", previous);
+      });
+      if (created) canonical.remove();
+      else if (oldCanonical === null) canonical.removeAttribute("href");
+      else canonical.setAttribute("href", oldCanonical);
+    };
+  }, []);
+
+  function enquire(services: string[] = [], goal = "") {
+    setRequest({ services, goal });
+    setMobileMenu(false);
+  }
+
+  function chooseService(id: string) {
+    setActive(id);
+    setMobileMenu(false);
+  }
+
+  return (
+    <div className="nwi">
+      <a className="nwi-skip" href="#nwi-main">
+        Skip to content
+      </a>
+      <header className="nwi-header">
+        <div className="nwi-wrap nwi-nav">
+          <Brand />
+          <nav className="nwi-desktop-nav" aria-label="Main navigation">
+            <a href="#nwi-services">What we do</a>
+            <a href="#nwi-audits">Business audits</a>
+            <a href="#nwi-process">How it works</a>
+          </nav>
+          <a
+            href="#nwi-request"
+            className="nwi-btn nwi-btn-small"
+            onClick={() => enquire()}
+          >
+            Find my next step <ArrowUpRight size={16} />
+          </a>
+          <button
+            className="nwi-menu-toggle"
+            type="button"
+            aria-expanded={mobileMenu}
+            aria-controls="nwi-mobile-nav"
+            aria-label={mobileMenu ? "Close menu" : "Open menu"}
+            onClick={() => setMobileMenu(!mobileMenu)}
+          >
+            {mobileMenu ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
+        {mobileMenu && (
+          <nav
+            id="nwi-mobile-nav"
+            className="nwi-mobile-nav"
+            aria-label="Mobile navigation"
+          >
+            <a href="#nwi-services" onClick={() => setMobileMenu(false)}>
+              What we do
+            </a>
+            <a href="#nwi-audits" onClick={() => setMobileMenu(false)}>
+              Business audits
+            </a>
+            <a href="#nwi-process" onClick={() => setMobileMenu(false)}>
+              How it works
+            </a>
+          </nav>
+        )}
+      </header>
+      <main id="nwi-main">
+        <section className="nwi-hero">
+          <div className="nwi-wrap nwi-hero-grid">
+            <div className="nwi-hero-copy">
+              <p className="nwi-kicker">
+                <span className="nwi-status-dot" /> PRACTICAL DIGITAL HELP FOR
+                LOCAL BUSINESSES
+              </p>
+              <h1>
+                Give your next
+                <br />
+                customer a reason
+                <br />
+                to <span>choose you.</span>
+              </h1>
+              <p className="nwi-lead">
+                You are busy running the business. We help your website and
+                customer enquiries work better around you.
+              </p>
+              <p className="nwi-hero-description">
+                Get a clearer website, useful AI support or a better follow-up
+                process. Start with the part that will make the biggest
+                practical difference to your day.
+              </p>
+              <div className="nwi-hero-actions">
+                <a
+                  href="#nwi-request"
+                  className="nwi-btn"
+                  onClick={() => enquire()}
+                >
+                  Find the right service <ArrowUpRight size={18} />
+                </a>
+                <a href="#nwi-audits" className="nwi-link">
+                  Start with a free audit <ArrowRight size={17} />
+                </a>
+              </div>
+              <p className="nwi-hero-reassurance">
+                <CheckCircle2 size={15} /> Clear scope. A quote before paid work
+                starts.
+              </p>
+            </div>
+            <div className="nwi-hero-visual">
+              <div className="nwi-visual-label">
+                <span>FROM INTERESTED TO IN TOUCH</span>
+                <span className="nwi-visual-dots">•••</span>
+              </div>
+              <div className="nwi-visual-title">
+                A better experience.
+                <br />
+                <span>Before you even pick up.</span>
+              </div>
+              <div className="nwi-visual-browser">
+                <div className="nwi-browser-top">
+                  <span />
+                  <span />
+                  <span />
+                  <small>your-business.com</small>
+                </div>
+                <div className="nwi-visual-conversation">
+                  <div className="nwi-question">
+                    <span>8:30 PM</span>
+                    <p>
+                      Do you serve my area?
+                      <br />
+                      I'd like to get a quote.
+                    </p>
+                  </div>
+                  <div className="nwi-answer">
+                    <span className="nwi-bot-icon">
+                      <MessageSquare size={19} />
+                    </span>
+                    <div>
+                      <strong>Your website assistant</strong>
+                      <p>
+                        Tell me about the job and where you are. I can take your
+                        details for the team to follow up.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="nwi-enquiry-ticket">
+                <span className="nwi-ticket-icon">
+                  <Check size={20} />
+                </span>
+                <div>
+                  <strong>A useful enquiry. Ready for your reply.</strong>
+                  <small>
+                    Customer details + what they need + service area
+                  </small>
+                </div>
+                <ArrowUpRight size={18} />
+              </div>
+              <p className="nwi-example-label">
+                ILLUSTRATIVE WORKFLOW, NOT A CUSTOMER RESULT
+              </p>
+              <div className="nwi-floating-note">
+                <Clock3 size={17} />
+                <span>
+                  Your day ends.
+                  <br />
+                  <strong>Enquiries do not have to.</strong>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="nwi-wrap nwi-hero-bottom">
+            <span>Built around your business.</span>
+            <p>
+              For trades, home services and other local service businesses in
+              Northwest Indiana.
+            </p>
+            <a href="#nwi-services">
+              Explore what is possible <ArrowRight size={16} />
+            </a>
+          </div>
+        </section>
+
+        <section className="nwi-wrap nwi-section nwi-start">
+          <div className="nwi-section-head">
+            <div>
+              <p className="nwi-kicker">START WITH THE PROBLEM</p>
+              <h2>
+                What would make
+                <br />
+                your working day easier?
+              </h2>
+            </div>
+            <p>
+              You do not need another tool to figure out. Choose the situation
+              that sounds like your business, and see how we can help.
+            </p>
+          </div>
+          <div className="nwi-start-grid">
+            {[
+              {
+                id: "website",
+                icon: Globe2,
+                title: "My website needs to do a better job.",
+                text: "Help visitors understand your services and send a useful enquiry.",
+              },
+              {
+                id: "chat",
+                icon: MessageSquare,
+                title: "I cannot always answer straight away.",
+                text: "Give people a useful response when you are on a job or closed.",
+              },
+              {
+                id: "followup",
+                icon: Mail,
+                title: "Following up keeps slipping down the list.",
+                text: "Create a practical process for staying in touch with interested customers.",
+              },
+            ].map((item) => (
+              <a
+                href="#nwi-services"
+                key={item.id}
+                className="nwi-start-card"
+                onClick={() => chooseService(item.id)}
+              >
+                <item.icon size={25} />
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+                <span>
+                  See how it works <ArrowUpRight size={17} />
+                </span>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section className="nwi-services-section" id="nwi-services">
+          <div className="nwi-wrap nwi-section">
+            <div className="nwi-section-head">
+              <div>
+                <p className="nwi-kicker">THE SERVICES, IN PLAIN ENGLISH</p>
+                <h2>
+                  Know what you get.
+                  <br />
+                  <span>Understand why it helps.</span>
+                </h2>
+              </div>
+              <p>
+                Each service solves a specific problem. Choose one to see the
+                work involved, a real-world use case and the costs we agree with
+                you.
+              </p>
+            </div>
+            <div className="nwi-service-explorer">
+              <div
+                className="nwi-service-menu"
+                role="group"
+                aria-label="Choose a service"
+              >
+                {nwiServices.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    aria-pressed={active === item.id}
+                    onClick={() => setActive(item.id)}
+                  >
+                    <item.icon size={19} />
+                    <span>{item.shortName}</span>
+                    <ArrowUpRight size={16} />
+                  </button>
+                ))}
+                <p>
+                  Pick one service or combine the parts your business needs.
+                </p>
+              </div>
+              <article
+                className="nwi-service-detail"
+                aria-live="polite"
+                aria-atomic="true"
+              >
+                <div className="nwi-service-badge">
+                  <service.icon size={16} />
+                  {service.name}
+                </div>
+                <h3>{service.heading}</h3>
+                <div className="nwi-service-intro">
+                  <p>
+                    <strong>Sound familiar?</strong> {service.problem}
+                  </p>
+                  <p className="nwi-benefit">{service.benefit}</p>
+                </div>
+                <div className="nwi-service-delivery">
+                  <div>
+                    <h4>What is included</h4>
+                    <ul>
+                      {service.includes.map((item) => (
+                        <li key={item}>
+                          <Check size={15} />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <aside>
+                    <span>WHAT THIS LOOKS LIKE</span>
+                    <p>{service.example}</p>
+                    <div>
+                      <Sparkles size={16} />
+                      <strong>{service.result}</strong>
+                    </div>
+                  </aside>
+                </div>
+                <details className="nwi-scope">
+                  <summary>
+                    Setup, delivery & running costs <ChevronDown size={17} />
+                  </summary>
+                  <p>
+                    <strong>How we deliver:</strong> {service.delivery}
+                  </p>
+                  <p>
+                    <strong>How pricing works:</strong> {service.costs}
+                  </p>
+                </details>
+                <div className="nwi-service-bottom">
+                  <span>A clear quote before you commit.</span>
+                  <a
+                    href="#nwi-request"
+                    className="nwi-btn"
+                    onClick={() =>
+                      enquire(
+                        [service.id],
+                        `I am interested in ${service.name.toLowerCase()}`,
+                      )
+                    }
+                  >
+                    Ask about this service <ArrowUpRight size={17} />
+                  </a>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section className="nwi-wrap nwi-section nwi-audits" id="nwi-audits">
+          <div className="nwi-section-head">
+            <div>
+              <p className="nwi-kicker">A SENSIBLE FIRST STEP</p>
+              <h2>
+                Find the gaps
+                <br />
+                before choosing the fix.
+              </h2>
+            </div>
+            <p>
+              A business audit helps you decide where to focus. Start with a
+              short free review, or ask for a deeper paid investigation.
+            </p>
+          </div>
+          <div className="nwi-audit-grid">
+            <article className="nwi-audit-card nwi-audit-free">
+              <div className="nwi-audit-top">
+                <span>THE STARTING POINT</span>
+                <strong>$0</strong>
+              </div>
+              <FileSearch size={31} />
+              <h3>
+                Free online
+                <br />
+                business audit
+              </h3>
+              <p>
+                A short manual review of your public online presence. Get a few
+                practical improvements to consider first.
+              </p>
+              <ul>
+                <li>
+                  <Check size={15} /> Website clarity and ease of making contact
+                </li>
+                <li>
+                  <Check size={15} /> Public Google profile and business
+                  information
+                </li>
+                <li>
+                  <Check size={15} /> A short list of useful next steps
+                </li>
+              </ul>
+              <a
+                href="#nwi-request"
+                className="nwi-btn"
+                onClick={() =>
+                  enquire(["free-audit"], "Start with a free business audit")
+                }
+              >
+                Request my free audit <ArrowUpRight size={17} />
+              </a>
+              <small>
+                No purchase required. Timing confirmed after your request.
+              </small>
+            </article>
+            <article className="nwi-audit-card nwi-audit-pro">
+              <div className="nwi-audit-top">
+                <span>THE DEEPER REVIEW</span>
+                <span className="nwi-paid-pill">PAID SERVICE</span>
+              </div>
+              <h3>Pro Business Audit</h3>
+              <p>
+                Understand the bigger picture with a deeper review and a
+                prioritized written action plan.
+              </p>
+              <div className="nwi-audit-comparison">
+                <div>
+                  <strong>Your website</strong>
+                  <span>
+                    Structure, mobile experience, performance checks and the
+                    route to an enquiry.
+                  </span>
+                </div>
+                <div>
+                  <strong>Your local presence</strong>
+                  <span>
+                    Google profile details and a review of relevant local
+                    competitors.
+                  </span>
+                </div>
+                <div>
+                  <strong>Your enquiry process</strong>
+                  <span>
+                    What happens after someone contacts you, including follow-up
+                    opportunities.
+                  </span>
+                </div>
+                <div>
+                  <strong>Your action plan</strong>
+                  <span>
+                    What to fix first, why it matters and which changes need
+                    specialist work.
+                  </span>
+                </div>
+              </div>
+              <div className="nwi-audit-pro-bottom">
+                <p>
+                  Fixed scope and price agreed first.
+                  <br />
+                  Implementation quoted separately.
+                </p>
+                <a
+                  href="#nwi-request"
+                  className="nwi-link"
+                  onClick={() =>
+                    enquire(
+                      ["pro-audit"],
+                      "I would like a quote for the Pro Business Audit",
+                    )
+                  }
+                >
+                  Get a Pro audit quote <ArrowUpRight size={17} />
+                </a>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section className="nwi-demo-section">
+          <div className="nwi-wrap nwi-section nwi-demo-grid">
+            <div>
+              <p className="nwi-kicker">MAKE IT TANGIBLE</p>
+              <h2>
+                A visitor has a question.
+                <br />
+                <span>You are still on a job.</span>
+              </h2>
+              <p>
+                An AI website assistant can handle a routine question and
+                collect the enquiry. You decide the information it uses and when
+                it should hand things over.
+              </p>
+              <a
+                href="#nwi-request"
+                className="nwi-link"
+                onClick={() =>
+                  enquire(
+                    ["chat"],
+                    "I would like help answering website enquiries",
+                  )
+                }
+              >
+                Could this work for my business? <ArrowUpRight size={17} />
+              </a>
+              <p className="nwi-demo-disclosure">
+                This is a scripted example. A real assistant is configured and
+                tested with your business information.
+              </p>
+            </div>
+            <div className="nwi-demo-panel">
+              <div className="nwi-demo-head">
+                <span>
+                  <MessageSquare size={22} />
+                </span>
+                <div>
+                  <strong>Meet a more helpful website.</strong>
+                  <small>CHOOSE A SAMPLE QUESTION</small>
+                </div>
+              </div>
+              <div
+                className="nwi-demo-buttons"
+                role="group"
+                aria-label="Sample customer questions"
+              >
+                {demoQuestions.map((item, index) => (
+                  <button
+                    type="button"
+                    key={item.question}
+                    aria-pressed={demo === index}
+                    onClick={() => setDemo(index)}
+                  >
+                    {item.question}
+                  </button>
+                ))}
+              </div>
+              <div
+                className="nwi-demo-messages"
+                aria-live="polite"
+                aria-atomic="true"
+              >
+                <p className="nwi-demo-question">
+                  {demoQuestions[demo].question}
+                </p>
+                <div className="nwi-demo-answer">
+                  <MessageSquare size={18} />
+                  <p>{demoQuestions[demo].answer}</p>
+                </div>
+              </div>
+              <div className="nwi-demo-caption">
+                <CheckCircle2 size={15} /> Answers from approved information,
+                with a clear handoff.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="nwi-wrap nwi-section" id="nwi-process">
+          <div className="nwi-section-head">
+            <div>
+              <p className="nwi-kicker">A STRAIGHTFORWARD PROCESS</p>
+              <h2>
+                A useful improvement.
+                <br />
+                With a clear plan to get there.
+              </h2>
+            </div>
+            <p>
+              You work directly with Kris. We agree what is useful for your
+              business before starting paid work.
+            </p>
+          </div>
+          <ol className="nwi-process-grid">
+            {[
+              [
+                "Tell us what needs to work better.",
+                "Use the short questionnaire. Share your business, the problem and any services you are considering.",
+              ],
+              [
+                "Get a recommendation and a clear quote.",
+                "We agree the scope, what you receive and any setup or ongoing costs. You decide whether to proceed.",
+              ],
+              [
+                "Review the work before it goes live.",
+                "Check the design, content or assistant behaviour with us. We test the agreed customer journey.",
+              ],
+              [
+                "Launch with the next steps explained.",
+                "Know how enquiries reach you, what your team needs to do and what support is included.",
+              ],
+            ].map(([title, text], index) => (
+              <li key={title}>
+                <span>0{index + 1}</span>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section className="nwi-wrap nwi-work">
+          <div className="nwi-work-intro">
+            <p className="nwi-kicker">EXAMPLES FROM OUR EXISTING PORTFOLIO</p>
+            <h2>
+              Thoughtful design.
+              <br />A useful purpose.
+            </h2>
+            <p>
+              A look at different website styles and experiences. Your project
+              is built around your own services and customers.
+            </p>
+          </div>
+          <div className="nwi-work-grid">
+            <a
+              href="https://paws-care.localdigitalops.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src={pawsExample}
+                width="800"
+                height="450"
+                loading="lazy"
+                alt="Paws Care website design example"
+              />
+              <span>
+                <strong>Paws Care</strong>
+                <small>Pet care website experience</small>
+                <ArrowUpRight size={18} />
+              </span>
+            </a>
+            <a
+              href="https://cookwithmimi.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src={mimiExample}
+                width="800"
+                height="450"
+                loading="lazy"
+                alt="Cook with Mimi website design example"
+              />
+              <span>
+                <strong>Cook with Mimi</strong>
+                <small>Content and recipe website</small>
+                <ArrowUpRight size={18} />
+              </span>
+            </a>
+          </div>
+        </section>
+
+        <section className="nwi-wrap nwi-discount-section">
+          <div className="nwi-discount">
+            <div>
+              <BadgePercent size={29} />
+              <span>LISTED ON LAKECOUNTYNWI.COM?</span>
+              <h2>
+                Your business qualifies
+                <br />
+                for a <strong>20% saving.</strong>
+              </h2>
+              <p>
+                Free listings count, too. Share your listing when you enquire
+                and we will show the saving on eligible paid service fees in
+                your quote.
+              </p>
+              <a
+                href="#nwi-request"
+                className="nwi-link"
+                onClick={() => enquire()}
+              >
+                Ask about your project <ArrowUpRight size={17} />
+              </a>
+            </div>
+            <div className="nwi-discount-note">
+              <span>
+                20<small>%</small>
+              </span>
+              <strong>OFF ELIGIBLE SERVICE FEES</strong>
+              <p>
+                Listing verification required. Excludes third-party software,
+                hosting, usage charges, ad spend, taxes and directory plans.
+                Cannot be combined with another promotion.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="nwi-wrap nwi-section nwi-request" id="nwi-request">
+          <div className="nwi-request-copy">
+            <p className="nwi-kicker">YOUR NEXT STEP</p>
+            <h2>
+              What would you
+              <br />
+              like your business
+              <br />
+              to do <span>better?</span>
+            </h2>
+            <p>
+              The short questionnaire helps us understand what you need. You
+              will see a summary before sending, and you can ask for a
+              recommendation if you are unsure.
+            </p>
+            <div className="nwi-owner">
+              <img
+                src={portrait}
+                width="60"
+                height="60"
+                alt="Kris Klukovic"
+                loading="lazy"
+              />
+              <div>
+                <strong>Hi, I'm Kris.</strong>
+                <span>You'll work directly with me.</span>
+              </div>
+            </div>
+            <p className="nwi-owner-note">
+              I build websites and practical digital tools for local businesses.
+              Tell me where things are getting stuck, and we can work out a
+              sensible next step.
+            </p>
+            <a
+              href="mailto:kris@localdigitalops.com"
+              className="nwi-direct-email"
+            >
+              <Mail size={17} />
+              kris@localdigitalops.com
+            </a>
+            <div className="nwi-request-promise">
+              <CheckCircle2 size={18} />
+              <p>
+                You receive the scope and price before any paid work starts.
+              </p>
+            </div>
+          </div>
+          <NwiEnquiry initialRequest={request} />
+        </section>
+
+        <section className="nwi-wrap nwi-section nwi-faq">
+          <div>
+            <p className="nwi-kicker">GOOD QUESTIONS</p>
+            <h2>Before you decide.</h2>
+          </div>
+          <div>
+            {faqs.map(([question, answer]) => (
+              <details key={question}>
+                <summary>
+                  {question}
+                  <ChevronDown size={18} />
+                </summary>
+                <p>{answer}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+      </main>
+      <footer className="nwi-footer">
+        <div className="nwi-wrap">
+          <Brand />
+          <p>
+            Practical digital services.
+            <br />
+            Built around the way your business works.
+          </p>
+          <nav aria-label="Footer">
+            <a href="#nwi-services">Services</a>
+            <a href="#nwi-audits">Free audit</a>
+            <a href="mailto:kris@localdigitalops.com">
+              Contact Kris <ArrowUpRight size={14} />
+            </a>
+          </nav>
+          <small>© {new Date().getFullYear()} Local Digital Ops</small>
+        </div>
+      </footer>
+    </div>
+  );
+}

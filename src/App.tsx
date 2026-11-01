@@ -11,6 +11,9 @@ import FreebieDownload from "./pages/FreebieDownload";
 import Accelerator from "./pages/Accelerator";
 import AcceleratorOffer from "./pages/AcceleratorOffer";
 import NotFound from "./pages/NotFound";
+import { lazy, Suspense } from "react";
+
+const Nwi = lazy(() => import("./pages/Nwi"));
 
 const queryClient = new QueryClient();
 
@@ -21,6 +24,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          <Route path="/nwi" element={<Suspense fallback={<div role="status" className="p-8">Loading Local Digital Ops...</div>}><Nwi /></Suspense>} />
           <Route path="/" element={<Index />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/checkout" element={<Checkout />} />
