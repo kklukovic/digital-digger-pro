@@ -1,0 +1,48 @@
+.nwi-book-nav{display:flex;align-items:center;justify-content:space-between;min-height:76px;gap:16px}
+.nwi-book-brand{font-size:22px;font-weight:650;letter-spacing:-.05em;white-space:nowrap}
+.nwi-book-brand>span{color:var(--n-orange-deep)}
+.nwi-book-brand small{display:block;font-size:9px;letter-spacing:.08em;color:var(--n-muted);margin-top:-3px}
+.nwi-book-back{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--n-muted)!important}
+.nwi-book-main{display:grid;grid-template-columns:1.06fr .89fr;gap:68px;padding-block:90px 120px;align-items:start}
+.nwi-book-intro h1{font-size:clamp(43px,5vw,70px);line-height:1.07;max-width:660px}
+.nwi-book-lead{font-size:18px;line-height:1.7;margin-top:24px!important;max-width:610px}
+.nwi-book-promise{display:flex;align-items:start;gap:10px;font-size:14px;line-height:1.65;font-weight:600;color:#793c26;margin-top:21px!important}
+.nwi-book-promise svg{flex-shrink:0;margin-top:3px;color:var(--n-orange)}
+.nwi-book-topics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:33px}
+.nwi-book-topic{padding:22px;background:#fff;border:1px solid var(--n-line);border-radius:12px}
+.nwi-book-topic svg{color:var(--n-orange-deep);margin-bottom:14px}
+.nwi-book-topic strong{font-weight:600;font-size:15px;display:block}
+.nwi-book-topic p{font-size:12px;line-height:1.7;color:var(--n-muted);margin-top:5px!important}
+.nwi-book-note{display:flex;align-items:flex-start;gap:11px;padding:22px;margin-top:28px;background:#ffefe2;border:1px solid #efd0bb;border-radius:11px}
+.nwi-book-note svg{color:var(--n-orange-deep);flex-shrink:0;margin-top:3px}
+.nwi-book-note p{font-size:12px;line-height:1.8;color:#69442e}
+.nwi-book-note strong{font-weight:600;color:#4d3020}
+.nwi-book-panel{background:#fff;border:1px solid #e2e2d8;border-radius:18px;padding:34px;box-shadow:0 20px 45px #23292210}
+.nwi-book-panel-head{border-bottom:1px solid var(--n-line);padding-bottom:22px}
+.nwi-book-panel-head>span{display:flex;align-items:center;gap:9px;color:var(--n-orange-deep);font-size:11px;letter-spacing:.08em;font-weight:700}
+.nwi-book-panel-head h2{font-size:32px;line-height:1.15;margin-top:17px!important}
+.nwi-book-panel-head p{font-size:13px;line-height:1.75;color:var(--n-muted);margin-top:11px!important}
+.nwi-book-form{display:grid;gap:15px;margin-top:22px}
+.nwi-book-form-notice{background:#f2f2eb;padding:13px;border-radius:8px;font-size:13px;line-height:1.6;color:#555950}
+.nwi-book-form label{display:grid;gap:7px;font-size:12px;font-weight:600}
+.nwi-book-form :is(input,textarea){width:100%;border:1px solid #ccd0c5;border-radius:8px;padding:11px 12px;font-size:14px;color:var(--n-ink);background:#fff;resize:vertical}
+.nwi-book-form :is(input,textarea):focus{outline:2px solid #eacdbb;border-color:#ae3b20}
+.nwi-book-form .nwi-book-trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.nwi-book-form>button{width:100%;justify-content:space-between;margin-top:5px}
+.nwi-book-privacy{font-size:11px;line-height:1.7;color:var(--n-muted);text-align:center}
+.nwi-book-error{padding:12px;border:1px solid #eed0c8;border-radius:7px;background:#fff0ef;font-size:12px;color:#9b2f18}
+.nwi-book-calendar{display:grid;gap:18px;margin-top:27px}
+.nwi-book-calendar>.nwi-btn{justify-content:space-between;line-height:1.5;text-align:left}
+.nwi-book-calendar p{font-size:12px;color:var(--n-muted)}
+.nwi-book-confirmed{display:grid;gap:12px;padding:29px 0}
+.nwi-book-confirmed svg{color:#45844d}
+.nwi-book-confirmed h3{font-size:24px}
+.nwi-book-confirmed p{font-size:13px;color:var(--n-muted)}
+.nwi-book-confirmed a{display:flex;align-items:center;gap:8px;text-decoration:underline!important;font-size:13px}
+.nwi-book-contact{display:flex;align-items:center;gap:8px;margin-top:25px;padding-top:19px;border-top:1px solid var(--n-line);color:var(--n-muted);font-size:12px}
+.nwi-book-contact a{text-decoration:underline}
+.nwi-book-footer{border-top:1px solid var(--n-line);padding:28px 0;font-size:11px;color:var(--n-muted)}
+.nwi-book-footer>div{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.nwi-book-footer a{display:inline-flex;gap:7px;align-items:center;font-weight:600}
+@media(max-width:940px){.nwi-book-main{grid-template-columns:1fr;gap:34px;padding-block:54px 80px}}
+@media(max-width:560px){.nwi-book-main{padding-block:45px 70px}.nwi-book-brand{font-size:19px}.nwi-book-panel{padding:23px}.nwi-book-intro h1{font-size:46px}.nwi-book-topics{grid-template-columns:1fr}.nwi-book-panel-head h2{font-size:27px}.nwi-book-back{font-size:11px}}
