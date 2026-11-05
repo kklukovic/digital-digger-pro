@@ -2584,3 +2584,16 @@
   .nwi-price-card { padding: 25px; }
   .nwi-package-main .nwi-btn { font-size: 12px; padding-inline: 17px; }
 }
+
+
+/* Free consultation strip and service discovery additions */
+.nwi-call-strip { background:#fff2e8; border-bottom:1px solid #efcdb6; }
+.nwi-call-strip-inner { display:flex; align-items:center; gap:21px; padding-block:16px; }
+.nwi-free-pill { display:inline-block; flex-shrink:0; font-size:10px; font-weight:700; color:#a13919; background:white; padding:7px 12px; border:1px solid #e9bfa3; border-radius:40px; letter-spacing:.055em; }
+.nwi-call-strip-inner p { flex:1; font-size:12px; line-height:1.6; color:#5c4334; }
+.nwi-call-strip-inner p strong { font-weight:600; color:#512d19; }
+.nwi-call-strip-inner>a { flex-shrink:0; display:flex; align-items:center; gap:7px; font-weight:600; color:#a5371b; text-decoration:underline; text-underline-offset:4px; font-size:12px; }
+.nwi-desktop-nav .nwi-nav-free { font-weight:700; color:#a43b1e; }
+.nwi-start-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+@media (max-width:1000px) { .nwi-start-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .nwi-call-strip-inner {flex-wrap:wrap;} .nwi-call-strip-inner p {flex-basis:calc(100% - 166px);} .nwi-call-strip-inner>a {margin-left:auto;} }
+@media (max-width:690px) { .nwi-call-strip-inner p {flex-basis:100%;} .nwi-call-strip-inner>a {margin-left:0;} .nwi-start-grid {grid-template-columns:1fr;} }
