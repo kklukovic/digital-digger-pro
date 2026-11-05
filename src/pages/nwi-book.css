@@ -23,12 +23,12 @@
 .nwi-book-panel-head h2{font-size:30px;line-height:1.15;margin-top:12px!important}
 .nwi-book-panel-head p{font-size:12px;line-height:1.65;color:var(--n-muted);margin-top:9px!important}
 .nwi-book-calendar{margin-top:14px;min-width:0}
-.nwi-book-embed{width:100%;height:740px;display:block;border:0;border-radius:10px;background:#fff}
+.nwi-book-embed{width:100%;height:600px;display:block;border:0;border-radius:10px;background:#fff}
 .nwi-book-direct{display:grid;gap:11px;background:#f4f4ee;border:1px solid var(--n-line);border-radius:10px;padding:16px;margin-top:14px}
 .nwi-book-direct p{font-size:12px;line-height:1.65;color:var(--n-muted)}
 .nwi-book-direct a{display:inline-flex;gap:8px;align-items:center;font-size:12px;font-weight:650;color:var(--n-orange-deep);text-decoration:underline;text-underline-offset:3px}
 .nwi-book-footer{border-top:1px solid var(--n-line);padding:28px 0;font-size:11px;color:var(--n-muted)}
 .nwi-book-footer>div{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
 .nwi-book-footer a{display:inline-flex;gap:7px;align-items:center;font-weight:600}
-@media(max-width:1030px){.nwi-book-main{grid-template-columns:1fr;gap:32px;padding-block:50px 80px}.nwi-book-intro{max-width:760px}.nwi-book-panel{max-width:850px;width:100%;margin-inline:auto}.nwi-book-embed{height:710px}}
-@media(max-width:560px){.nwi-book-main{padding-block:39px 65px}.nwi-book-brand{font-size:19px}.nwi-book-panel{padding:14px}.nwi-book-intro h1{font-size:45px}.nwi-book-topics{grid-template-columns:1fr}.nwi-book-panel-head h2{font-size:27px}.nwi-book-back{font-size:11px}.nwi-book-embed{height:700px}}
+@media(max-width:1030px){.nwi-book-main{grid-template-columns:1fr;gap:32px;padding-block:50px 80px}.nwi-book-intro{max-width:760px}.nwi-book-panel{max-width:850px;width:100%;margin-inline:auto}.nwi-book-embed{height:600px}}
+@media(max-width:560px){.nwi-book-main{padding-block:39px 65px}.nwi-book-brand{font-size:19px}.nwi-book-panel{padding:14px}.nwi-book-intro h1{font-size:45px}.nwi-book-topics{grid-template-columns:1fr}.nwi-book-panel-head h2{font-size:27px}.nwi-book-back{font-size:11px}.nwi-book-embed{height:600px}}
