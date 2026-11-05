@@ -3,26 +3,11 @@ import { ArrowLeft, ArrowUpRight, CalendarDays, CheckCircle2, Clock3, Globe2, Ph
 import "./nwi.css";
 import "./nwi-book.css";
 
-const configuredLink = (import.meta.env.VITE_NWI_GOOGLE_BOOKING_URL || "").trim();
-const configuredEmbedLink = (import.meta.env.VITE_NWI_GOOGLE_EMBED_URL || "").trim();
-
-function validGoogleLink(value: string) {
-  if (!value) return "";
-  try {
-    const url = new URL(value);
-    const allowed = url.hostname === "calendar.app.google" || url.hostname === "calendar.google.com";
-    return url.protocol === "https:" && allowed ? url.toString() : "";
-  } catch {
-    return "";
-  }
-}
-
-const bookingUrl = validGoogleLink(configuredLink);
-// Google's own inline embed code provides the canonical URL with gv=true.
-// Until that is supplied, try the user's public booking URL, and always show a
-// direct Google booking link in case the shortened URL refuses to display in an iframe.
-const embedUrl = validGoogleLink(configuredEmbedLink) ||
-  (bookingUrl ? bookingUrl + (bookingUrl.includes("?") ? "&" : "?") + "gv=true" : "");
+// This public Google Calendar appointment-schedule URL is deliberately embedded
+// in the page source. Vite environment configuration previously returned an
+// empty string in production and incorrectly hid the real booking calendar.
+const bookingUrl = "https://calendar.app.google/dyexRYVs5d3dzf5h7";
+const embedUrl = "https://calendar.google.com/calendar/appointments/schedules/AcZssZ0WmDn9RJV4KEZUZGR79QROv8sh-qir7rylcV6L41sCBgCl8E_M3Dk13kGd8iNe6Q2ZRL-3imk4?gv=true";
 
 const topics = [
   { title: "Website", detail: "Improve clarity, trust and customer enquiries.", icon: Globe2 },
@@ -70,29 +55,23 @@ export default function NwiBook() {
           <h2 id="nwi-book-panel-title">Choose your time.</h2>
           <p>Select an available appointment below. Google Calendar handles the booking and shows times in your local timezone.</p>
         </div>
-        {embedUrl ? (
-          <div className="nwi-book-calendar">
-            <iframe
-              title="Google Calendar appointment schedule for a free 30-minute business advice call"
-              className="nwi-book-embed"
-              src={embedUrl}
-              loading="eager"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allow="fullscreen"
-            />
-            <div className="nwi-book-direct">
-              <p>If the embedded calendar does not show available appointments, open the same schedule directly in Google Calendar.</p>
-              <a href={bookingUrl || embedUrl} target="_blank" rel="noopener noreferrer">
-                Open booking calendar <ArrowUpRight size={17} />
-              </a>
-            </div>
+        <div className="nwi-book-calendar">
+          <iframe
+            title="Google Calendar appointment schedule for a free 30-minute business advice call"
+            className="nwi-book-embed"
+            src={embedUrl}
+            width="100%"
+            height="600"
+            loading="eager"
+            referrerPolicy="strict-origin-when-cross-origin"
+          />
+          <div className="nwi-book-direct">
+            <p>Can't see the calendar? Open the same booking schedule directly in Google Calendar.</p>
+            <a href={bookingUrl} target="_blank" rel="noopener noreferrer">
+              Open Google booking calendar <ArrowUpRight size={17} />
+            </a>
           </div>
-        ) : (
-          <div className="nwi-book-calendar">
-            <p>The booking schedule is temporarily unavailable on this page. Please use our contact email until the Google Calendar link is restored.</p>
-            <a href="mailto:kris@localdigitalops.com?subject=Free%2030-minute%20business%20advice%20call">Contact Kris</a>
-          </div>
-        )}
+        </div>
       </section>
     </main>
     <footer className="nwi-book-footer">
