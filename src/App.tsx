@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import { lazy, Suspense } from "react";
 
 const Nwi = lazy(() => import("./pages/Nwi"));
+const NwiBook = lazy(() => import("./pages/NwiBook"));
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/nwi" element={<Suspense fallback={<div role="status" className="p-8">Loading Local Digital Ops...</div>}><Nwi /></Suspense>} />
+          <Route path="/nwi/book" element={<Suspense fallback={<div role="status" className="p-8">Loading booking page...</div>}><NwiBook /></Suspense>} />
           <Route path="/" element={<Index />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/checkout" element={<Checkout />} />
