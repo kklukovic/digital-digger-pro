@@ -61,7 +61,7 @@ const demoQuestions = [
 const faqs = [
   [
     "I do not know which service I need. Where should I start?",
-    "Book a free 15-minute advice call, choose a starting point in the questionnaire, or request a short free audit. We will help identify a useful improvement. There is no obligation to buy.",
+    "Book a free 30-minute advice call, choose a starting point in the questionnaire, or request a short free audit. We will help identify a useful improvement. There is no obligation to buy.",
   ],
   [
     "What does the free audit include?",
@@ -123,7 +123,7 @@ export default function Nwi() {
       [
         "name",
         "description",
-        "Local SEO, websites, Google Business Profile, social content and AI call answering for Northwest Indiana businesses. Free 15-minute business advice call.",
+        "Local SEO, websites, Google Business Profile, social content and AI call answering for Northwest Indiana businesses. Free 30-minute business advice call.",
       ],
       [
         "property",
@@ -199,7 +199,7 @@ export default function Nwi() {
             <a href="/nwi/book" className="nwi-nav-free">Free advice call</a>
           </nav>
           <a href="/nwi/book" className="nwi-btn nwi-btn-small">
-            Free 15-min call <CalendarDays size={16} />
+            Free 30-min call <CalendarDays size={16} />
           </a>
           <button
             className="nwi-menu-toggle"
@@ -236,7 +236,7 @@ export default function Nwi() {
       <main id="nwi-main">
         <section className="nwi-call-strip" aria-label="Free business advice call">
           <div className="nwi-wrap nwi-call-strip-inner">
-            <span className="nwi-free-pill">FREE · 15 MINUTES</span>
+            <span className="nwi-free-pill">FREE · 30 MINUTES</span>
             <p><strong>Have a business question?</strong> Get a practical second opinion about your website, SEO, Google presence, incoming calls or content. Useful advice even if you never hire us.</p>
             <a href="/nwi/book">Get free advice <ArrowUpRight size={16} /></a>
           </div>
