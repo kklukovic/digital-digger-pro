@@ -7,10 +7,12 @@ import {
   CheckCircle2,
   ChevronDown,
   Clock3,
+  CalendarDays,
   FileSearch,
   Globe2,
   Mail,
   Menu,
+  PhoneCall,
   MessageSquare,
   Sparkles,
   X,
@@ -59,7 +61,7 @@ const demoQuestions = [
 const faqs = [
   [
     "I do not know which service I need. Where should I start?",
-    "Choose 'I am not sure what I need' in the short questionnaire, or request the free audit. We will look at your business and recommend a sensible starting point. You can decide after you understand the scope and price.",
+    "Book a free 15-minute advice call, choose a starting point in the questionnaire, or request a short free audit. We will help identify a useful improvement. There is no obligation to buy.",
   ],
   [
     "What does the free audit include?",
@@ -68,6 +70,14 @@ const faqs = [
   [
     "How much will this cost?",
     "Individual services have starting prices for the scope shown in the pricing section. A larger or more complex project can cost more. The Complete Business Upgrade has its own defined scope and project fee. Before you commit, your written quote separates setup, extras and ongoing costs such as hosting, software and call usage. The free online business audit is $0.",
+  ],
+  [
+    "What is the difference between Google Business Profile and SEO?",
+    "Google Business Profile work improves your Maps listing, services, contact details and useful updates. Website SEO helps people find and use your service pages in Google Search. Depending on your current situation, you may need one or both.",
+  ],
+  [
+    "Can AI answer calls during working hours and schedule appointments?",
+    "Yes. Depending on your phone system, a tested AI receptionist can answer after-hours calls, take daytime overflow or cover all incoming calls. With a connected and verified calendar, it can offer real availability and book appointments. Otherwise it takes a clear callback request. Transfer to staff is possible where supported.",
   ],
   [
     "Do I have to buy everything together?",
@@ -103,7 +113,7 @@ export default function Nwi() {
   useEffect(() => {
     const previousTitle = document.title;
     document.title =
-      "Websites & AI Assistants for Local Businesses | Local Digital Ops NWI";
+      "SEO, Websites & AI Call Answering | Local Digital Ops NWI";
     const originals: Array<{
       element: Element;
       previous: string | null;
@@ -113,7 +123,7 @@ export default function Nwi() {
       [
         "name",
         "description",
-        "Clear websites, Google Business Profile help and practical AI assistants for local businesses in Northwest Indiana. Start with a free business audit or request a tailored quote.",
+        "Local SEO, websites, Google Business Profile, social content and AI call answering for Northwest Indiana businesses. Free 15-minute business advice call.",
       ],
       [
         "property",
@@ -186,13 +196,10 @@ export default function Nwi() {
             <a href="#nwi-services">What we do</a>
             <a href="#nwi-pricing">Prices & package</a>
             <a href="#nwi-process">How it works</a>
+            <a href="/nwi/book" className="nwi-nav-free">Free advice call</a>
           </nav>
-          <a
-            href="#nwi-request"
-            className="nwi-btn nwi-btn-small"
-            onClick={() => enquire()}
-          >
-            Find my next step <ArrowUpRight size={16} />
+          <a href="/nwi/book" className="nwi-btn nwi-btn-small">
+            Free 15-min call <CalendarDays size={16} />
           </a>
           <button
             className="nwi-menu-toggle"
@@ -220,10 +227,20 @@ export default function Nwi() {
             <a href="#nwi-process" onClick={() => setMobileMenu(false)}>
               How it works
             </a>
+            <a href="/nwi/book" onClick={() => setMobileMenu(false)}>
+              Free advice call
+            </a>
           </nav>
         )}
       </header>
       <main id="nwi-main">
+        <section className="nwi-call-strip" aria-label="Free business advice call">
+          <div className="nwi-wrap nwi-call-strip-inner">
+            <span className="nwi-free-pill">FREE · 15 MINUTES</span>
+            <p><strong>Have a business question?</strong> Get a practical second opinion about your website, SEO, Google presence, incoming calls or content. Useful advice even if you never hire us.</p>
+            <a href="/nwi/book">Get free advice <ArrowUpRight size={16} /></a>
+          </div>
+        </section>
         <section className="nwi-hero">
           <div className="nwi-wrap nwi-hero-grid">
             <div className="nwi-hero-copy">
@@ -243,9 +260,9 @@ export default function Nwi() {
                 customer enquiries work better around you.
               </p>
               <p className="nwi-hero-description">
-                Get a clearer website, useful AI support or a better follow-up
-                process. Start with the part that will make the biggest
-                practical difference to your day.
+                Improve local search visibility, build a clearer website,
+                publish useful content or answer more customer calls.
+                Start with the improvement that matters most to your business.
               </p>
               <div className="nwi-hero-actions">
                 <a
@@ -255,8 +272,8 @@ export default function Nwi() {
                 >
                   Find the right service <ArrowUpRight size={18} />
                 </a>
-                <a href="#nwi-audits" className="nwi-link">
-                  Start with a free audit <ArrowRight size={17} />
+                <a href="/nwi/book" className="nwi-link">
+                  Ask me anything on a free call <ArrowRight size={17} />
                 </a>
               </div>
               <p className="nwi-hero-reassurance">
@@ -365,10 +382,16 @@ export default function Nwi() {
                 text: "Help visitors understand your services and send a useful enquiry.",
               },
               {
-                id: "chat",
-                icon: MessageSquare,
-                title: "I cannot always answer straight away.",
-                text: "Give people a useful response when you are on a job or closed.",
+                id: "seo",
+                icon: FileSearch,
+                title: "Local customers cannot easily find me.",
+                text: "Improve how your services appear in Google Search.",
+              },
+              {
+                id: "phone",
+                icon: PhoneCall,
+                title: "My business misses customer calls.",
+                text: "Answer after hours or during busy periods, with booking where supported.",
               },
               {
                 id: "followup",
@@ -535,7 +558,7 @@ export default function Nwi() {
               <div className="nwi-package-main">
                 <span className="nwi-package-label">{introductoryOffer ? "LIMITED INTRODUCTORY OFFER · 50% OFF" : "ONE CONNECTED BUSINESS SETUP"}</span>
                 <h3 id="nwi-package-title">Complete Business<br />Upgrade.</h3>
-                <p className="nwi-package-lead">A clearer website. Useful content. Answers after hours. A better way to follow up.</p>
+                <p className="nwi-package-lead">A clearer website and local SEO. Useful content. AI call answering after hours or during busy periods. Better follow-up.</p>
                 <p>Bring the pieces together in one project, with one person coordinating the setup and testing how they work together.</p>
                 <div className="nwi-package-price">
                   {introductoryOffer && <span>Standard package <s>{nwiPackage.regularPrice}</s></span>}
@@ -553,8 +576,9 @@ export default function Nwi() {
                     ["Website build or improvements", "A new website of up to 5 pages, or equivalent improvements to your current site. Mobile layout, enquiry form and clear calls to action, with 2 revision rounds."],
                     ["Website copy + launch content", "Copy for the included pages, plus 12 social post drafts with captions and simple branded graphics. Built from your approved facts and supplied photos."],
                     ["Google Business Profile improvements", "An update of 1 existing profile: business details, services, description and useful photo guidance. Verification and rankings remain with Google."],
+                    ["SEO foundations", "On-page search optimization for the included website pages: service-focused titles, headings, copy, internal links and essential technical checks. Ongoing SEO is separate."],
                     ["AI website chat assistant", "Setup on 1 website, approved answers for up to 50 common questions, enquiry capture and a clear handoff to your team."],
-                    ["AI voice receptionist", "1 incoming-call flow for after-hours or overflow calls, routine answers and caller summaries. Number setup and routing depend on your provider."],
+                    ["AI voice receptionist", "1 incoming-call flow for after-hours or daytime overflow, approved answers and caller summaries. Live bookings or call transfers are included only when an agreed integration is configured and tested. Number setup and forwarding depend on your provider."],
                     ["Enquiry follow-up", "1 workflow with an acknowledgement and 1 follow-up email, configured with your agreed sending tools."],
                     ["Pro audit, launch testing + handover", "A written priority plan, end-to-end setup checks, a handover session and 30 days of support for fixes to the delivered setup."],
                   ].map(([title, detail]) => <li key={title}><CheckCircle2 size={18} aria-hidden="true" /><div><strong>{title}</strong><p>{detail}</p></div></li>)}
@@ -978,6 +1002,7 @@ export default function Nwi() {
           <nav aria-label="Footer">
             <a href="#nwi-services">Services</a>
             <a href="#nwi-audits">Free audit</a>
+            <a href="/nwi/book">Free advice call</a>
             <a href="mailto:kris@localdigitalops.com">
               Contact Kris <ArrowUpRight size={14} />
             </a>
